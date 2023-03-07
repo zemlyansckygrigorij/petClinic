@@ -8,5 +8,5 @@ interface PetComponent {
     fun findAll(): ArrayList<Pet>
     fun deleteById(id: Long)
     fun findByName(name: String): ArrayList<Pet>
-    fun findByOwner(phone: String): ArrayList<Pet>
+    fun findByOwnerId(id: Long): ArrayList<Pet>
 }
