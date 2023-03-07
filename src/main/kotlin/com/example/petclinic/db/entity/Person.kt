@@ -26,4 +26,4 @@ abstract class Person(
     @Column(name = "gender", nullable = true)
     @Enumerated(EnumType.STRING)
     open var gender: Gender
-){}
+)
