@@ -1,0 +1,12 @@
+package com.example.petclinic.db.services
+
+import com.example.petclinic.db.entity.Vet
+
+interface VetComponent {
+    fun save(vet: Vet)
+    fun findById(id: Long): Vet
+    fun findAll(): ArrayList<Vet>
+    fun deleteById(id: Long)
+    fun findByName(name: String): ArrayList<Vet>
+    fun findByPhone(phone: String): Vet
+}
