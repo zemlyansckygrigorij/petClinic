@@ -2,6 +2,11 @@ package com.example.petclinic.db.entity
 import java.util.*
 import javax.persistence.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class Owner
+ */
 @Table(name = "owner")
 data class Owner(
     override val id: Long,

@@ -3,6 +3,11 @@ package com.example.petclinic.db.entity
 import java.util.*
 import javax.persistence.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class Pet
+ */
 @Entity
 @Table(name = "pet")
 data class Pet(
