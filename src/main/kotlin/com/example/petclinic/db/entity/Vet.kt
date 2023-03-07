@@ -4,6 +4,11 @@ import java.util.*
 import javax.persistence.Column
 import javax.persistence.Table
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class Vet
+ */
 @Table(name = "vet")
 data class Vet(
     override val id: Long,
