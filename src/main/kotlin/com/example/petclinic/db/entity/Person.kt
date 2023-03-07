@@ -8,22 +8,22 @@ import javax.persistence.*
 abstract class Person(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long ,
+    open val id: Long ,
 
     @Column(name = "fullname", nullable = false)
-    var fullname: String,
+    open var fullName: String,
 
     @Column(name = "address", nullable = true)
-    var address: String? = null,
+    open var address: String? = null,
 
     @Column(name = "phone", nullable = true)
-    var phone: String? = null,
+    open var phone: String? = null,
 
     @Column(name = "birthday", nullable = true)
     @Temporal(TemporalType.DATE)
-    var birthday: Date? = null,
+    open var birthday: Date? = null,
 
     @Column(name = "gender", nullable = true)
     @Enumerated(EnumType.STRING)
-    var gender: Gender
+    open var gender: Gender
 ){}
