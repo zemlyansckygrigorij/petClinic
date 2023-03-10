@@ -33,8 +33,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.kafka:spring-kafka")
-    // https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
-    implementation("javax.persistence:javax.persistence-api:2.2")
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation("org.postgresql:postgresql:42.5.4")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
