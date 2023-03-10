@@ -3,6 +3,11 @@ package com.example.petclinic.db.entity
 import java.util.*
 import jakarta.persistence.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class Owner
+ */
 @Entity
 @Table(name = "owner",schema = "public")
 class Owner(
@@ -27,3 +32,5 @@ class Owner(
     @Enumerated(EnumType.STRING)
      var gender: Gender
 )
+
+

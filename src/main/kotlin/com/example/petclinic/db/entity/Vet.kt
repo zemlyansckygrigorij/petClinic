@@ -4,6 +4,11 @@ import org.springframework.data.annotation.Id
 import java.util.*
 import jakarta.persistence.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class Vet
+ */
 @Table(name = "vet",schema = "public")
 class Vet(
     @Id
@@ -26,5 +31,6 @@ class Vet(
     @Column(name = "gender", nullable = true)
     @Enumerated(EnumType.STRING)
     var gender: Gender,
+
     @Column(name = "qualification", nullable = true)
     var qualification: String? = null)

@@ -3,6 +3,11 @@ package com.example.petclinic.db.entity
 import java.util.*
 import jakarta.persistence.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * abstract class Person
+ */
 @Entity
 abstract class Person(
     @Id

@@ -2,6 +2,12 @@ package com.example.petclinic.db.entity
 
 import jakarta.persistence.*
 
+
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class Service
+ */
 @Entity
 @Table(name = "services",schema = "public")
 class Service(
