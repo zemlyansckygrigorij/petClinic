@@ -1,21 +1,27 @@
 package com.example.petclinic.db.entity
 
-import javax.persistence.*
+import jakarta.persistence.*
 
+
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class Service
+ */
 @Entity
-@Table(name = "services")
-data class Service(
+@Table(name = "services",schema = "public")
+class Service(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long ,
+    val id: Long,
 
     @Column(name = "name", nullable = false)
-    var name: String,
+    val name: String,
 
     @Column(name = " description", nullable = true)
-    var description: String? = null,
+    val description: String? = null,
 
     @Column(name = "price", nullable = false)
-    var price: Double
+    val price: Double
 )
