@@ -6,7 +6,7 @@ import jakarta.persistence.*
 /**
  * @author Grigoriy Zemlyanskiy
  * @version 1.0
- * data class Owner
+ * class Owner
  */
 @Entity
 @Table(name = "owner",schema = "public")

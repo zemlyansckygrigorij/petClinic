@@ -2,6 +2,11 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Service
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * interface ServiceComponent
+ */
 interface ServiceComponent {
     fun save(service: Service)
     fun findById(id: Long): Service

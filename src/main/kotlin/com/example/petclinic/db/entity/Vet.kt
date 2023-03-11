@@ -7,7 +7,7 @@ import jakarta.persistence.*
 /**
  * @author Grigoriy Zemlyanskiy
  * @version 1.0
- * data class Vet
+ * class Vet
  */
 @Table(name = "vet",schema = "public")
 class Vet(
