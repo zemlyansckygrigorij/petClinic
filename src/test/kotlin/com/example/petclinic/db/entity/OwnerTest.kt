@@ -11,7 +11,7 @@ class OwnerTest(){
 
         var owner = Owner(0L,"owner","Address","phone",date, Gender.MALE)
         assertEquals(owner.id,0)
-        assertEquals(owner.gender,Gender.MALE)
+        assertEquals(owner.gender,Gender.MALE.toString())
         assertEquals(owner.fullName,"owner")
         assertEquals(owner.address,"Address")
         assertEquals(owner.phone,"phone")
