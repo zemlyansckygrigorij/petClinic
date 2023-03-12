@@ -3,7 +3,7 @@ insert into owner(full_name, address , phone, birthday, gender)
 values('Bradley Alexander Abbe','london','23-35-2324','02-03-99','MALE'),
       ('Martin Quinn Abbett','london','23-45-4324','02-03-99','MALE'),
       ('Max Mendoza Alan','london','23-42-2324','02-03-99','MALE'),
-      ('Stephen Allen Alden','london','23-35-2324','02-03-99','MALE'),
+      ('Stephen Allen Alden','london','23-35-1324','02-03-99','MALE'),
       ('Dominic Clarke Beaner','london','13-45-2324','02-03-99','MALE'),
       ('Theobold Elliott Bear','london','23-45-2324','02-03-99','MALE'),
       ('Davy Mills Bearfield','london','22-45-2324','02-03-99','MALE'),
