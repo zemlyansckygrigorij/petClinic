@@ -5,7 +5,7 @@ import jakarta.persistence.*
 /**
  * @author Grigoriy Zemlyanskiy
  * @version 1.0
- * data class Pet
+ * class Pet
  */
 @Entity
 @Table(name = "pet", schema = "public")
