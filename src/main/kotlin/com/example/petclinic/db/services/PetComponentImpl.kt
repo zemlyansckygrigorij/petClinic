@@ -5,6 +5,11 @@ import com.example.petclinic.db.repo.PetRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class Owner
+ */
 @Service
 class PetComponentImpl @Autowired constructor(
     val petRepo: PetRepo
