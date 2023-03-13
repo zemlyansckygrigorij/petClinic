@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("service")
+@RequestMapping("/service")
 class ServiceController(private val serviceComponent:ServiceComponent) {
 
     @GetMapping
@@ -15,11 +15,11 @@ class ServiceController(private val serviceComponent:ServiceComponent) {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable id:Long)= serviceComponent.findById(id)
+    fun findById(@PathVariable(name = "id") id:Long)= serviceComponent.findById(id)
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@PathVariable name:String)= serviceComponent.findByName(name)
+    fun findByName(@PathVariable(name = "name") name:String)= serviceComponent.findByName(name)
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
@@ -32,5 +32,5 @@ class ServiceController(private val serviceComponent:ServiceComponent) {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun delete(@PathVariable id:Long) =serviceComponent.deleteById(id)
+    fun delete(@PathVariable(name = "id") id:Long) =serviceComponent.deleteById(id)
 }
