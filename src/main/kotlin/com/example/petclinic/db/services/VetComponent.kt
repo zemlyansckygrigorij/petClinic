@@ -8,7 +8,7 @@ import com.example.petclinic.db.entity.Vet
  * interface VetComponent
  */
 interface VetComponent {
-    fun save(vet: Vet)
+    fun save(vet: Vet): Vet
     fun findById(id: Long): Vet
     fun findAll(): ArrayList<Vet>
     fun deleteById(id: Long)

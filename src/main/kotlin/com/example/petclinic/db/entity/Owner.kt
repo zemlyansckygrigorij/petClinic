@@ -15,7 +15,7 @@ class Owner(
    @GeneratedValue(strategy = GenerationType.IDENTITY)
      val id: Long,
 
-    @Column(name = "fullname", nullable = false)
+    @Column(name = "full_name", nullable = false)
      var fullName: String,
 
     @Column(name = "address", nullable = true)

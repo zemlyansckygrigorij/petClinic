@@ -1,6 +1,5 @@
 package com.example.petclinic.db.entity
 
-import org.springframework.data.annotation.Id
 import java.util.*
 import jakarta.persistence.*
 
@@ -9,13 +8,14 @@ import jakarta.persistence.*
  * @version 1.0
  * class Vet
  */
-@Table(name = "vet",schema = "public")
+@Entity
+@Table(name = "vet")
 class Vet(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long ,
 
-    @Column(name = "fullname", nullable = false)
+    @Column(name = "full_name", nullable = false)
     var fullName: String,
 
     @Column(name = "address", nullable = true)

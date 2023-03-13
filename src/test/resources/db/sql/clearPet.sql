@@ -1,0 +1,1 @@
+delete from pet where id>0;

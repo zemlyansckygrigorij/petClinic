@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service
 class OwnerComponentImpl @Autowired constructor(
     val  ownerRepo: OwnerRepo
 ): OwnerComponent{
-    override fun save(owner: Owner) {
-        ownerRepo.save(owner)
+    override fun save(owner: Owner): Owner {
+        return ownerRepo.save(owner)
     }
 
     override fun findById(id: Long): Owner {

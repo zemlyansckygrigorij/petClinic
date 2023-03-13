@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service
 class PetComponentImpl @Autowired constructor(
     val petRepo: PetRepo
 ): PetComponent{
-    override fun save(pet: Pet) {
-        petRepo.save(pet)
+    override fun save(pet: Pet): Pet{
+        return petRepo.save(pet)
     }
 
     override fun findById(id: Long): Pet {
