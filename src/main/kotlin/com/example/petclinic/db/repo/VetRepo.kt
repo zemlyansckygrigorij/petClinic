@@ -1,12 +1,16 @@
 package com.example.petclinic.db.repo
 
-import com.example.petclinic.db.entity.Owner
 import com.example.petclinic.db.entity.Vet
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * interface VetRepo
+ */
 @Repository
 interface VetRepo: JpaRepository<Vet, Long>{
     @Query(value
@@ -22,6 +26,4 @@ interface VetRepo: JpaRepository<Vet, Long>{
             + "where phone  LIKE %:phone% ",
         nativeQuery = true)
     open fun findByPhone(@Param("phone") phone: String?): Vet?
-
-
 }

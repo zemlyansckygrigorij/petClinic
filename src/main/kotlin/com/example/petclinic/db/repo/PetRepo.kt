@@ -7,6 +7,11 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * interface PetRepo
+ */
 @Repository
 interface PetRepo: JpaRepository<Pet, Long>{
     @Query(value
@@ -19,7 +24,7 @@ interface PetRepo: JpaRepository<Pet, Long>{
     @Query(value
     = "select * "
             + "from pet  "
-            + "where id_owner = %:id% ",
+            + "where id_owner = :id",
         nativeQuery = true)
     open fun findByOwner(@Param("id") id: Long): ArrayList<Pet>
 

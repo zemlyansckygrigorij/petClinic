@@ -2,8 +2,13 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Service
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * interface ServiceComponent
+ */
 interface ServiceComponent {
-    fun save(service: Service)
+    fun save(service: Service): Service
     fun findById(id: Long): Service
     fun findAll(): ArrayList<Service>
     fun deleteById(id: Long)

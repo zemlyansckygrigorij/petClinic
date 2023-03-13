@@ -5,12 +5,17 @@ import com.example.petclinic.db.repo.VetRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class VetComponentImpl
+ */
 @Service
 class VetComponentImpl @Autowired constructor(
     val vetRepo: VetRepo
 ): VetComponent {
-    override fun save(vet: Vet) {
-        vetRepo.save(vet)
+    override fun save(vet: Vet): Vet {
+        return vetRepo.save(vet)
     }
 
     override fun findById(id: Long): Vet {

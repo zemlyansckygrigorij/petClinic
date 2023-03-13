@@ -6,6 +6,11 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * interface ServiceRepo
+ */
 @Repository
 interface ServiceRepo: JpaRepository<Service, Long>{
     @Query(value

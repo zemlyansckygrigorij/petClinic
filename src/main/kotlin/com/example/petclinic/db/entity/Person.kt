@@ -1,9 +1,13 @@
 package com.example.petclinic.db.entity
 
-import org.springframework.data.annotation.Id
 import java.util.*
-import javax.persistence.*
+import jakarta.persistence.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * abstract class Person
+ */
 @Entity
 abstract class Person(
     @Id
