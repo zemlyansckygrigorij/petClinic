@@ -1,4 +1,4 @@
-delete from owner where id>0;
+
 insert into owner(full_name, address , phone, birthday, gender)
 values('Bradley Alexander Abbe','london','23-35-2324','02-03-99','MALE'),
       ('Martin Quinn Abbett','london','23-45-4324','02-03-99','MALE'),
