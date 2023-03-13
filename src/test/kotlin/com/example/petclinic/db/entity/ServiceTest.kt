@@ -3,6 +3,11 @@ package com.example.petclinic.db.entity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class ServiceTest
+ */
 class ServiceTest(){
     @Test
     fun makeTest(){

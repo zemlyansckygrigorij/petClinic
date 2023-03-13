@@ -4,6 +4,11 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.util.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class OwnerTest
+ */
 class OwnerTest(){
     @Test
     fun makeTest(){
