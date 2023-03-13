@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("vet")
+@RequestMapping("/vet")
 class VetController(private val vetComponent: VetComponent) {
 
     @GetMapping
@@ -15,15 +15,15 @@ class VetController(private val vetComponent: VetComponent) {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable id:Long) = vetComponent.findById(id)
+    fun findById(@PathVariable(name = "id") id:Long) = vetComponent.findById(id)
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@PathVariable name:String)= vetComponent.findByName(name)
+    fun findByName(@PathVariable(name = "name") name:String)= vetComponent.findByName(name)
 
     @GetMapping("/phone/{phone}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@PathVariable phone: String) = vetComponent.findByPhone(phone)
+    fun findByPhone(@PathVariable(name = "phone") phone: String) = vetComponent.findByPhone(phone)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -31,10 +31,10 @@ class VetController(private val vetComponent: VetComponent) {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(@PathVariable id:Long, @RequestBody vet:Vet) = vetComponent.save(vet)
+    fun update(@PathVariable(name = "id") id:Long, @RequestBody vet:Vet) = vetComponent.save(vet)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun delete(@PathVariable id: Long) = vetComponent.deleteById(id)
+    fun delete(@PathVariable(name = "id") id: Long) = vetComponent.deleteById(id)
 
 }
