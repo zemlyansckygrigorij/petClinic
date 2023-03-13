@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service
 class ServiceComponentImpl @Autowired constructor(
     val serviceRepo: ServiceRepo
 ): ServiceComponent {
-    override fun save(service: com.example.petclinic.db.entity.Service) {
-        serviceRepo.save(service)
+    override fun save(service: com.example.petclinic.db.entity.Service): com.example.petclinic.db.entity.Service {
+        return serviceRepo.save(service)
     }
 
     override fun findById(id: Long): com.example.petclinic.db.entity.Service {
