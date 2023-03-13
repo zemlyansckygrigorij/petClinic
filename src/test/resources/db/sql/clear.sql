@@ -1,1 +1,0 @@
-delete from owner where id>0;
