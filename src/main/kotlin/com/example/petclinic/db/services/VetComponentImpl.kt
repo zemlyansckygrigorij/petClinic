@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service
 class VetComponentImpl @Autowired constructor(
     val vetRepo: VetRepo
 ): VetComponent {
-    override fun save(vet: Vet) {
-        vetRepo.save(vet)
+    override fun save(vet: Vet): Vet {
+        return vetRepo.save(vet)
     }
 
     override fun findById(id: Long): Vet {
