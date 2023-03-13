@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 /**
  * @author Grigoriy Zemlyanskiy
  * @version 1.0
- * class Owner
+ * class OwnerComponentImpl
  */
 @Service
 class OwnerComponentImpl @Autowired constructor(
