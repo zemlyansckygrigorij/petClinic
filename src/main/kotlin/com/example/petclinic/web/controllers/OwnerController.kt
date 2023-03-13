@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.*
+
 @RestController
-@RequestMapping("owner")
+@RequestMapping("/owner")
 class OwnerController(private val ownerComponent:OwnerComponent) {
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
@@ -18,14 +19,15 @@ class OwnerController(private val ownerComponent:OwnerComponent) {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable id:Long)=ownerComponent.findById(id)
-    @GetMapping("/{name}")
+    fun findById(@PathVariable(name = "id") id: Long)=ownerComponent.findById(id)
+
+    @GetMapping("/name/{name}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@PathVariable name:String)=ownerComponent.findByName(name)
+    fun findByName(@PathVariable(name = "name") name:String)=ownerComponent.findByName(name)
 
     @GetMapping("/phone/{phone}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@PathVariable phone: String) = ownerComponent.findByPhone(phone)
+    fun findByPhone(@PathVariable(name = "phone") phone: String) = ownerComponent.findByPhone(phone)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -33,11 +35,11 @@ class OwnerController(private val ownerComponent:OwnerComponent) {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(@PathVariable id:Long,@RequestBody owner:Owner)= ownerComponent.save(owner)
+    fun update(@PathVariable(name = "id") id:Long,@RequestBody owner:Owner)= ownerComponent.save(owner)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun delete(@PathVariable id:Long) = ownerComponent.deleteById(id)
+    fun delete(@PathVariable(name = "id") id:Long) = ownerComponent.deleteById(id)
 }
 
 
