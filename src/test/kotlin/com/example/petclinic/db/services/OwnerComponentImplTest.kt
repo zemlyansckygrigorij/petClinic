@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.jdbc.Sql
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -14,17 +13,16 @@ import java.util.*
 @SpringBootTest
 class OwnerComponentImplTest @Autowired constructor(val  ownerComponent: OwnerComponent){
 
-    @Sql("/db/sql/insertOwner.sql")
     @Test
     fun save() {
-        var owners =ownerComponent.findAll()
-        var id = owners.maxBy { it.id }.id+1
-        assertEquals(owners.size, 17);
-        var date = Date()
-        var owner = Owner(id,"owner","Address","phone",date, Gender.MALE)
-        var ownerSave = ownerComponent.save(owner)
-        var ownerFromTable = ownerComponent.findById(ownerSave.id)
-        assertEquals(ownerComponent.findAll().size, 18);
+        val owners =ownerComponent.findAll()
+        val id = owners.maxBy { it.id }.id+1
+        assertEquals(owners.size, 17)
+        val date = Date()
+        val owner = Owner(id,"owner","Address","phone",date, Gender.MALE)
+        val ownerSave = ownerComponent.save(owner)
+        val ownerFromTable = ownerComponent.findById(ownerSave.id)
+        assertEquals(ownerComponent.findAll().size, 18)
         assertEquals(ownerFromTable.gender, Gender.MALE )
         assertEquals(ownerFromTable.fullName,"owner")
         assertEquals(ownerFromTable.address,"Address")
@@ -33,50 +31,57 @@ class OwnerComponentImplTest @Autowired constructor(val  ownerComponent: OwnerCo
         val pattern = "yyyy-MM-dd"
         val simpleDateFormat = SimpleDateFormat(pattern)
         assertEquals(ownerFromTable.birthday.toString(),simpleDateFormat.format(date).toString())
+        ownerComponent.deleteById(ownerFromTable.id)
+        assertEquals(ownerComponent.findAll().size, 17)
     }
 
     @Test
     fun findById() {
+        val owner = ownerComponent.findById(1)
+        assertEquals(owner.id, 1)
+        assertEquals(owner.gender, Gender.MALE )
+        assertEquals(owner.fullName,"Bradley Alexander Abbe")
+        assertEquals(owner.address,"Baltimore")
+        assertEquals(owner.phone,"23-35-2324")
+        assertEquals(owner.birthday.toString() ,"1990-01-30")
     }
 
     @Test
     fun findAll() {
+        val owners =ownerComponent.findAll()
+        assertEquals(owners.size, 17)
     }
 
     @Test
-    @Sql("/db/sql/insertOwner.sql")
     fun deleteById() {
-        var owners =ownerComponent.findAll()
-        var id = owners.maxBy { it.id }.id+1
-        assertEquals(owners.size, 17);
-        var date = Date()
-        var owner = Owner(id,"owner","Address","phone",date, Gender.MALE)
-        var ownerSave = ownerComponent.save(owner)
-        assertEquals(ownerComponent.findAll().size, 18);
-        ownerComponent.deleteById(id)
-        assertEquals(ownerComponent.findAll().size, 17);
+        val owners =ownerComponent.findAll()
+        val id = owners.maxBy { it.id }.id+1
+        assertEquals(owners.size, 17)
+        val date = Date()
+        val owner = Owner(id,"owner","Address","phone",date, Gender.MALE)
+        val ownerSave = ownerComponent.save(owner)
+        assertEquals(ownerComponent.findAll().size, 18)
+        ownerComponent.deleteById(ownerSave.id)
+        assertEquals(ownerComponent.findAll().size, 17)
     }
 
     @Test
-    @Sql("/db/sql/insertOwner.sql")
     fun findByName() {
-        var ownersFromTable = ownerComponent.findByName("Bradley")
-        assertEquals(ownersFromTable.size, 1);
-        var owner = ownersFromTable.get(0)
-
+        val ownersFromTable = ownerComponent.findByName("Bradley")
+        assertEquals(ownersFromTable.size, 1)
+        val owner = ownersFromTable[0]
         assertEquals(owner.gender, Gender.MALE )
         assertEquals(owner.fullName,"Bradley Alexander Abbe")
-        assertEquals(owner.address,"london")
+        assertEquals(owner.address,"Baltimore")
         assertEquals(owner.phone,"23-35-2324")
     }
 
     @Test
-    @Sql("/db/sql/insertOwner.sql")
     fun findByPhone() {
-        var ownerFromTable = ownerComponent.findByPhone("23-35-2324")
+        val ownerFromTable = ownerComponent.findByPhone("23-35-2324")
         assertEquals(ownerFromTable.gender, Gender.MALE )
         assertEquals(ownerFromTable.fullName,"Bradley Alexander Abbe")
-        assertEquals(ownerFromTable.address,"london")
+        assertEquals(ownerFromTable.address,"Baltimore")
         assertEquals(ownerFromTable.gender,Gender.MALE)
     }
 }
