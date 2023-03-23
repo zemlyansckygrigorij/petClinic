@@ -31,7 +31,7 @@ class OwnerController(private val ownerComponent:OwnerComponent) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody owner: Owner) = ownerComponent.save(owner)
+    fun create(@RequestBody owner: Owner): Owner = ownerComponent.save(owner)
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
