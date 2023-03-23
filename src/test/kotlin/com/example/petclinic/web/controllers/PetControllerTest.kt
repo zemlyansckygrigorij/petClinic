@@ -28,22 +28,20 @@ class PetControllerTest @Autowired constructor(
     val restTemplate: TestRestTemplate,
     val petComponent: PetComponent
 ){
-   // @LocalServerPort
-    //private val port = 0
+    @LocalServerPort
+    private  val port = 0
+    private val localhostPet = localhost+port+"/pet"
+    private val localhostPetId = localhost+port+"/pet/1"
+    private val localhostPetNameOliver = localhost+port+"/pet/name/Oliver"
+    private val localhostPetByOwnerId = localhost+port+"/pet/owner/1"
+
     companion object{
-        @LocalServerPort
-        private val port = 0
         private const val petCreate = """{"kind":"CAT","name":"test123","age":1,"idOwner":1,"gender":"MALE"}"""
         private const val petUpdateEnd = ""","kind":"CAT","name":"testUpdate","age":1,"idOwner":1,"gender":"MALE"}"""
         private const val petUpdateStart = """{"id": """
         private const val petUrl = "http://localhost:8080/pet"
         private const val localhost = "http://localhost:"
-        private val localhostPet = localhost+port+"/pet"
-        private val localhostPetId = localhost+port+"/pet/1"
-        private val localhostPetNameOliver = localhost+port+"/pet/name/Oliver"
-       private val localhostPetByOwnerId = localhost+port+"/pet/owner/1"
     }
-
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -55,18 +53,17 @@ class PetControllerTest @Autowired constructor(
 
     @Test
     fun findAll(){
-
         assertTrue(
             this
                 .restTemplate
-                .getForObject(localhostPet, String::class.java)
+                .getForObject(localhost+port+"/pet", String::class.java)
             .toString()
             .contains("Oliver"))
 
         assertFalse(
             this
                 .restTemplate
-                .getForObject(localhostPet, String::class.java)
+                .getForObject(localhost+port+"/pet", String::class.java)
                 .toString()
                 .contains("asdfasdfsad"))
 
