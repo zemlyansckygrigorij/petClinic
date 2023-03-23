@@ -96,8 +96,8 @@ class OwnerControllerTest @Autowired constructor(
 
     @Test
     fun commonTest(){
-        val owners = ownerComponent.findAll()
-        val id = owners.maxBy { it.id }.id +1
+        val numberOwners = ownerComponent.findAll().size
+
         mockMvc.perform(
             MockMvcRequestBuilders
                 .post(ownerUrl)
@@ -107,8 +107,10 @@ class OwnerControllerTest @Autowired constructor(
         )
             .andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-        assertEquals(ownerComponent.findAll().size, owners.size+1)
 
+        assertEquals(ownerComponent.findAll().size, numberOwners+1)
+
+        val id = ownerComponent.findAll().maxBy { it.id }.id
         val ownerFromTable = ownerComponent.findById(id)
         assertEquals(ownerFromTable.id, id)
         assertEquals(ownerFromTable.fullName, "Test")
@@ -132,7 +134,7 @@ class OwnerControllerTest @Autowired constructor(
         assertEquals(ownerFromTableUpdate.gender, Gender.MALE)
         assertEquals(ownerFromTableUpdate.phone, "23-35-2324")
         assertEquals(ownerFromTableUpdate.birthday.toString(), "1990-01-30")
-        assertEquals(ownerComponent.findAll().size, owners.size+1)
+        assertEquals(ownerComponent.findAll().size, numberOwners+1)
 
         mockMvc.perform(
             MockMvcRequestBuilders
@@ -140,6 +142,6 @@ class OwnerControllerTest @Autowired constructor(
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isOk())
-        assertEquals(ownerComponent.findAll().size, owners.size)
+        assertEquals(ownerComponent.findAll().size, numberOwners)
     }
 }
