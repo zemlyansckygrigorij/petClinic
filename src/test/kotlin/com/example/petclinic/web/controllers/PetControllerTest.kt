@@ -140,8 +140,7 @@ class PetControllerTest @Autowired constructor(
 
     @Test
     fun create() {
-        val pets = petComponent.findAll()
-        val id = pets.maxBy { it.id }.id+1
+        val numberPets = petComponent.findAll().size
 
         mockMvc.perform(
             MockMvcRequestBuilders
@@ -152,8 +151,9 @@ class PetControllerTest @Autowired constructor(
         )
            .andExpect(status().isCreated())
            .andExpect(jsonPath("$.id").exists())
-        assertEquals(petComponent.findAll().size, pets.size+1)
+        assertEquals(petComponent.findAll().size, numberPets + 1)
 
+        val id = petComponent.findAll().maxBy { it.id }.id
         val petFromTable = petComponent.findById(id)
         assertEquals(petFromTable.id, id)
         assertEquals(petFromTable.name, "test123")
@@ -177,7 +177,7 @@ class PetControllerTest @Autowired constructor(
         assertEquals(petFromTable1.gender, Gender.MALE)
         assertEquals(petFromTable1.kind, "CAT")
         assertEquals(petFromTable1.idOwner, 1)
-        assertEquals(petComponent.findAll().size, pets.size+1)
+        assertEquals(petComponent.findAll().size, numberPets + 1)
 
         mockMvc.perform(
             MockMvcRequestBuilders
@@ -186,7 +186,7 @@ class PetControllerTest @Autowired constructor(
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
 
-        assertEquals(petComponent.findAll().size, pets.size)
+        assertEquals(petComponent.findAll().size, numberPets)
     }
 }
 
