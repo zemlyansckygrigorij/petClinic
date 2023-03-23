@@ -27,13 +27,13 @@ class PetController(private val petComponent: PetComponent) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody pet: Pet) = petComponent.save(pet)
+    fun create(@RequestBody pet: Pet): Pet = petComponent.save(pet)
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun update(@PathVariable(name = "id") id: Long, @RequestBody pet: Pet) = petComponent.save(pet)
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun delete(@PathVariable(name = "id") id: Long) = petComponent.deleteById(id)
 
