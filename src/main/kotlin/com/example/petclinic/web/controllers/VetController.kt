@@ -17,13 +17,13 @@ class VetController(private val vetComponent: VetComponent) {
     @ResponseStatus(HttpStatus.FOUND)
     fun findById(@PathVariable(name = "id") id:Long) = vetComponent.findById(id)
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@PathVariable(name = "name") name:String)= vetComponent.findByName(name)
+    fun findByName(@RequestParam name:String)= vetComponent.findByName(name)
 
-    @GetMapping("/phone/{phone}")
+    @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@PathVariable(name = "phone") phone: String) = vetComponent.findByPhone(phone)
+    fun findByPhone(@RequestParam phone: String) = vetComponent.findByPhone(phone)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

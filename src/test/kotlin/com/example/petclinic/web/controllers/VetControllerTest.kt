@@ -15,6 +15,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -30,8 +31,8 @@ class VetControllerTest @Autowired constructor(
     private val localhost = "http://localhost:"
     private val localhostVet = localhost +port+"/vet"
     private val localhostVetId = localhost +port+"/vet/22"
-    private val localhostVetByName = localhost +port+"/vet/name/Russ"
-    private val localhostVetByPhone = localhost +port+"/vet/phone/73-35-2324"
+    private val localhostVetByName = localhost +port+"/vet/name"
+    private val localhostVetByPhone = localhost +port+"/vet/phone"
     private val vetUrl = "http://localhost:8080/vet"
     companion object{
         private val vetCreate = """{"fullName":"Test","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
@@ -73,21 +74,46 @@ class VetControllerTest @Autowired constructor(
 
     @Test
     fun findByName() {
-        mockMvc.get(localhostVetByName).andExpect {
-            content {
-                string("""[{"id":22,"fullName":"Russ Abbot","address":"Baltimore","phone":"73-35-2324","birthday":"1990-01-30","gender":"MALE","qualification":"first"}]""")
-            }
-        }
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .get(localhostVetByName)
+                .param("name", "Russ")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ) .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value("22"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].fullName").value("Russ Abbot"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address").value("Baltimore"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].phone").value("73-35-2324"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].birthday").value("1990-01-30"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("MALE"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].qualification").value("first"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").exists())
     }
 
     @Test
     fun findByPhone() {
-        mockMvc.get(localhostVetByPhone).andExpect {
-            content {
-                string("""{"id":22,"fullName":"Russ Abbot","address":"Baltimore","phone":"73-35-2324","birthday":"1990-01-30","gender":"MALE","qualification":"first"}""")
-            }
-        }
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .get(localhostVetByPhone)
+                .param("phone", "73-35-2324")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ) .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("22"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.fullName").value("Russ Abbot"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.address").value("Baltimore"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.phone").value("73-35-2324"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.birthday").value("1990-01-30"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("MALE"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.qualification").value("first"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
     }
+
     @Test
     fun commonTest(){
         val numberVet = vetComponent.findAll().size
