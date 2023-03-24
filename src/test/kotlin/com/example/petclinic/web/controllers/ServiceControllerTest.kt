@@ -17,6 +17,7 @@ import org.hamcrest.Matchers
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -33,7 +34,7 @@ class ServiceControllerTest @Autowired constructor(
     private val localhost = "http://localhost:"
     private val localhostService = localhost+port+"/service"
     private val localhostServiceId = localhostService+"/1"
-    private val localhostServiceByName = localhostService+"/name/Puppy"
+    private val localhostServiceByName = localhostService+"/name"
     private val serviceUrl = "http://localhost:8080/service"
     companion object{
         private val serviceCreate = """{"name": "Test","description": "Test","price": 10.1}"""
@@ -75,11 +76,20 @@ class ServiceControllerTest @Autowired constructor(
 
     @Test
     fun findByName() {
-        mockMvc.get(localhostServiceByName).andExpect {
-            content {
-                string("""[{"id":2,"name":"Puppy and Kitten Wellness Exams & Vaccination","description":"We know how exciting it is for pet parents to have a new puppy or kitten in the house and thatâs why weâve created a vet visit just for them! Our in-home Wellness Exams and Vaccinations are at the heart of a happy, healthy (and growing) pet and provide essential preventative care. We offer all the core vaccines and non-core âlifestyleâ vaccines that your puppy or kitten will need during their first year of life.","price":13.5}]""")
-            }
-        }
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .get(localhostServiceByName)
+                .param("name", "Puppy and Kitten Wellness Exams & Vaccination")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ) .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value("2"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Puppy and Kitten Wellness Exams & Vaccination"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].description").exists())
+
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").exists())
     }
 
     @Test

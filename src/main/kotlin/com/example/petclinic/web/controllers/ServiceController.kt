@@ -17,9 +17,9 @@ class ServiceController(private val serviceComponent:ServiceComponent) {
     @ResponseStatus(HttpStatus.FOUND)
     fun findById(@PathVariable(name = "id") id:Long)= serviceComponent.findById(id)
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@PathVariable(name = "name") name:String)= serviceComponent.findByName(name)
+    fun findByName(@RequestParam name:String)= serviceComponent.findByName(name)
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)

@@ -21,13 +21,13 @@ class OwnerController(private val ownerComponent:OwnerComponent) {
     @ResponseStatus(HttpStatus.FOUND)
     fun findById(@PathVariable(name = "id") id: Long)=ownerComponent.findById(id)
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@PathVariable(name = "name") name:String)=ownerComponent.findByName(name)
+    fun findByName(@RequestParam name:String)=ownerComponent.findByName(name)
 
-    @GetMapping("/phone/{phone}")
+    @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@PathVariable(name = "phone") phone: String) = ownerComponent.findByPhone(phone)
+    fun findByPhone(@RequestParam phone: String) = ownerComponent.findByPhone(phone)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
