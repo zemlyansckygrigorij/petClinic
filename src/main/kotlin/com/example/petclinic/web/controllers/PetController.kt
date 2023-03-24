@@ -17,9 +17,9 @@ class PetController(private val petComponent: PetComponent) {
     @ResponseStatus(HttpStatus.FOUND)
     fun findById(@PathVariable(name = "id") id: Long) = petComponent.findById(id)
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@PathVariable(name = "name") name: String) = petComponent.findByName(name)
+    fun findByName(@RequestParam name: String) = petComponent.findByName(name)
 
     @GetMapping("/owner/{id}")
     @ResponseStatus(HttpStatus.FOUND)

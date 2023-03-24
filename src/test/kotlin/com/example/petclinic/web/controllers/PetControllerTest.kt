@@ -17,6 +17,8 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.*
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -32,7 +34,7 @@ class PetControllerTest @Autowired constructor(
     private  val port = 0
     private val localhostPet = localhost+port+"/pet"
     private val localhostPetId = localhost+port+"/pet/1"
-    private val localhostPetNameOliver = localhost+port+"/pet/name/Oliver"
+    private val localhostPetName = localhost+port+"/pet/name"
     private val localhostPetByOwnerId = localhost+port+"/pet/owner/1"
 
     companion object{
@@ -96,26 +98,24 @@ class PetControllerTest @Autowired constructor(
     }
     @Test
     fun findByName(){
-        assertTrue(
-            this
-                .restTemplate
-                .getForObject(localhostPetNameOliver, String::class.java)
-                .toString()
-                .contains("Oliver"))
-
-        assertFalse(
-            this
-                .restTemplate
-                .getForObject(localhostPetNameOliver, String::class.java)
-                .toString()
-                .contains("asdfasdfsad"))
-
-        mockMvc.get(localhostPetNameOliver).andExpect {
-            content {
-                string("""[{"id":1,"kind":"CAT","name":"Oliver","age":1,"idOwner":1,"gender":"MALE"}]""".trimIndent())
-            }
-        }
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .get(localhostPetName)
+                .param("name", "Oliver")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ) .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().is3xxRedirection)
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(jsonPath("$[0].id").value("1"))
+            .andExpect(jsonPath("$[0].name").value("Oliver"))
+            .andExpect(jsonPath("$[0].kind").value("CAT"))
+            .andExpect(jsonPath("$[0].age").value("1"))
+            .andExpect(jsonPath("$[0].idOwner").value("1"))
+            .andExpect(jsonPath("$[0].gender").value("MALE"))
+            .andExpect(jsonPath("$[0].id").exists())
     }
+
     @Test
     fun findByOwnerId(){
         assertTrue(
