@@ -10,22 +10,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class ProducerService @Autowired constructor(
-    val kafkaTemplate: KafkaTemplate<String, Owner>
+    val kafkaTemplate: KafkaTemplate<String, String>
 ) {
-
-    fun produce(message: String) {
-        println("Producing the message: $message")
-        //kafkaTemplate.send("messages", message)
-    }
     fun produceOwner(owner: Owner){
-
-        println("OwnerMapper().getOwnerDto(owner) - "+OwnerMapper().getOwnerDto(owner))
-
-        println("--- - ")
-       /* (1..100).forEach {
-            kafkaTemplate.send("messages", it.toString())
-        }*/
-       // OwnerMapper().getOwnerDto(owner)
-        kafkaTemplate.send("messages", owner)
+        kafkaTemplate.send("messages", OwnerMapper().getOwnerDto(owner).toString())
     }
 }
