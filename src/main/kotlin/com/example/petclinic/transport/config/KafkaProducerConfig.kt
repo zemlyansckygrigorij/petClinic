@@ -8,9 +8,9 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.core.ProducerFactory
 
-@Configuration
-class KafkaProducerConfig {
-    private val bootstrapAddress: String = "localhost:9092"
+//@Configuration
+//class KafkaProducerConfig {
+  /*  private val bootstrapAddress: String = "localhost:9092"
     @Bean
     fun producerFactory(): ProducerFactory<String, String> {
         val configProps: MutableMap<String, Any> = HashMap()
@@ -23,5 +23,5 @@ class KafkaProducerConfig {
     @Bean
     fun kafkaTemplate(): KafkaTemplate<String, String> {
         return KafkaTemplate(producerFactory())
-    }
-}
+    }*/
+//}
