@@ -12,7 +12,7 @@ import jakarta.persistence.*
 @Table(name = "owner",schema = "public")
 class Owner(
     @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
      val id: Long,
 
     @Column(name = "full_name", nullable = false)

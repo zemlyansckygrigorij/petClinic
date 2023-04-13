@@ -2,6 +2,7 @@ package com.example.petclinic.web.controllers
 
 import com.example.petclinic.db.entity.Owner
 import com.example.petclinic.db.services.OwnerComponent
+import com.example.petclinic.transport.service.ProducerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/owner")
-class OwnerController(private val ownerComponent:OwnerComponent) {
+class OwnerController(private val ownerComponent: OwnerComponent,
+                      private val producerService: ProducerService
+) {
+
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
     fun findAll()=ownerComponent.findAll()
@@ -28,6 +32,10 @@ class OwnerController(private val ownerComponent:OwnerComponent) {
     @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
     fun findByPhone(@RequestParam phone: String) = ownerComponent.findByPhone(phone)
+
+    @GetMapping("/{id}/send")
+    @ResponseStatus(HttpStatus.FOUND)
+    fun sendOwner(@PathVariable(name = "id") id: Long)=producerService.produceOwner(ownerComponent.findById(id))//producerService.produce(ownerComponent.findById(id).fullName)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
