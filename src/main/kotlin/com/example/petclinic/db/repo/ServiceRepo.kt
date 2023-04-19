@@ -1,6 +1,6 @@
 package com.example.petclinic.db.repo
 
-import com.example.petclinic.db.entity.Service
+import com.example.petclinic.db.entity.Services
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository
  * interface ServiceRepo
  */
 @Repository
-interface ServiceRepo: JpaRepository<Service, Long>{
+interface ServiceRepo: JpaRepository<Services, Long>{
     @Query(value
     = "select * "
             + "from services  "
             + "where name  LIKE %:name% ",
         nativeQuery = true)
-    open fun findByName(@Param("name") name: String?): ArrayList<Service>
+    open fun findByName(@Param("name") name: String?): ArrayList<Services>
 }
