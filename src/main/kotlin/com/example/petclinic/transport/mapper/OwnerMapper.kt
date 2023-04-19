@@ -13,4 +13,12 @@ class OwnerMapper {
             owner.gender.toString(),
             owner.birthday.toString())
     }
+    fun getJson(owner: Owner):String{
+        var ownerDto:OwnerDto = OwnerDto(owner.fullName,
+            owner.address,
+            owner.phone,
+            owner.gender.toString(),
+            owner.birthday.toString())
+        return mapper.writeValueAsString(ownerDto)
+    }
 }
