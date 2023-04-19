@@ -6,16 +6,16 @@ import jakarta.persistence.*
 /**
  * @author Grigoriy Zemlyanskiy
  * @version 1.0
- * data class Owner
+ * class Owner
  */
 @Entity
 @Table(name = "owner",schema = "public")
 class Owner(
     @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
      val id: Long,
 
-    @Column(name = "fullname", nullable = false)
+    @Column(name = "full_name", nullable = false)
      var fullName: String,
 
     @Column(name = "address", nullable = true)

@@ -6,11 +6,11 @@ import jakarta.persistence.*
 /**
  * @author Grigoriy Zemlyanskiy
  * @version 1.0
- * data class Service
+ * class Service
  */
 @Entity
 @Table(name = "services",schema = "public")
-class Service(
+class Services(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

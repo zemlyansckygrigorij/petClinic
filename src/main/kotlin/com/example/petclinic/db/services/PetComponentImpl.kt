@@ -4,13 +4,17 @@ import com.example.petclinic.db.entity.Pet
 import com.example.petclinic.db.repo.PetRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class PetComponentImpl
+ */
 @Service
 class PetComponentImpl @Autowired constructor(
     val petRepo: PetRepo
 ): PetComponent{
-    override fun save(pet: Pet) {
-        petRepo.save(pet)
+    override fun save(pet: Pet): Pet{
+        return petRepo.save(pet)
     }
 
     override fun findById(id: Long): Pet {
