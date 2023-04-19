@@ -8,20 +8,25 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.core.ProducerFactory
 
-//@Configuration
-//class KafkaProducerConfig {
-  /*  private val bootstrapAddress: String = "localhost:9092"
-    @Bean
+@Configuration
+class KafkaProducerConfig {
+   private val bootstrapAddress: String = "localhost:9092"
+   /* @Bean
     fun producerFactory(): ProducerFactory<String, String> {
-        val configProps: MutableMap<String, Any> = HashMap()
-        configProps[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapAddress
-        configProps[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
-        configProps[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
+        val configProps =  OwnerProducer().props
         return DefaultKafkaProducerFactory(configProps)
-    }
+    }*/
 
-    @Bean
+   /* @Bean
     fun kafkaTemplate(): KafkaTemplate<String, String> {
         return KafkaTemplate(producerFactory())
     }*/
-//}
+}
+
+class OwnerProducer: BaseProperties("localhost:9092"){}
+class OwnerConsumer:  BaseProperties("localhost:9092"){
+  init{
+      this.props.put("auto.offset.reset" , "earliest")
+      this.props.put("group.id", "someGroup")
+  }
+}
