@@ -9,5 +9,5 @@ data class OwnerDto(
     @JsonProperty("address") var address: String,
     @JsonProperty("phone") var phone: String,
     @JsonProperty("gender") var gender: String,
-    @JsonProperty("birthday") var birthday: String,
+    @JsonProperty("birthday") var birthday: String
 )

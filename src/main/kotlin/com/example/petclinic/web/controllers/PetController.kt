@@ -2,12 +2,15 @@ package com.example.petclinic.web.controllers
 
 import com.example.petclinic.db.entity.Pet
 import com.example.petclinic.db.services.PetComponent
+import com.example.petclinic.transport.service.ProducerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/pet")
-class PetController(private val petComponent: PetComponent) {
+class PetController(private val petComponent: PetComponent,
+                    private val producerService: ProducerService
+) {
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
@@ -24,6 +27,10 @@ class PetController(private val petComponent: PetComponent) {
     @GetMapping("/owner/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     fun findByOwnerId(@PathVariable(name = "id") id: Long) = petComponent.findByOwnerId(id)
+
+    @GetMapping("/{id}/send")
+    @ResponseStatus(HttpStatus.FOUND)
+    fun sendPet(@PathVariable(name = "id") id: Long)=producerService.producePet(petComponent.findById(id))
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

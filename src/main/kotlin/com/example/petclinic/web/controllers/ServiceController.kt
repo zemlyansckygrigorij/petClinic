@@ -1,13 +1,16 @@
 package com.example.petclinic.web.controllers
 
-import com.example.petclinic.db.entity.Service
+import com.example.petclinic.db.entity.Services
 import com.example.petclinic.db.services.ServiceComponent
+import com.example.petclinic.transport.service.ProducerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/service")
-class ServiceController(private val serviceComponent:ServiceComponent) {
+class ServiceController(private val serviceComponent:ServiceComponent,
+                        private val producerService: ProducerService
+) {
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
@@ -21,13 +24,17 @@ class ServiceController(private val serviceComponent:ServiceComponent) {
     @ResponseStatus(HttpStatus.FOUND)
     fun findByName(@RequestParam name:String)= serviceComponent.findByName(name)
 
+    @GetMapping("/{id}/send")
+    @ResponseStatus(HttpStatus.FOUND)
+    fun sendService(@PathVariable(name = "id") id: Long)=producerService.produceService(serviceComponent.findById(id))
+
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody service: Service)=serviceComponent.save(service)
+    fun create(@RequestBody service: Services)=serviceComponent.save(service)
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun save(@RequestBody service:Service)= serviceComponent.save(service)
+    fun save(@RequestBody service:Services)= serviceComponent.save(service)
 
 
     @DeleteMapping("/{id}")
