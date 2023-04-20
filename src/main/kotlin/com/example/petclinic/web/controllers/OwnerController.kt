@@ -25,20 +25,26 @@ class OwnerController(private val ownerComponent: OwnerComponent,
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable(name = "id") id: Long) = OwnerResponse.getOwnerResponse(ownerComponent.findById(id))//ownerComponent.findById(id)
+    fun findById(@PathVariable(name = "id") id: Long) = OwnerResponse
+        .getOwnerResponse(ownerComponent.findById(id))//ownerComponent.findById(id)
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestParam name:String)=ownerComponent.findByName(name).map { owner ->OwnerResponse
+    fun findByName(@RequestParam name:String)=ownerComponent
+        .findByName(name)
+        .map { owner ->OwnerResponse
         .getOwnerResponse(owner) }
 
     @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@RequestParam phone: String) = OwnerResponse.getOwnerResponse(ownerComponent.findByPhone(phone))
+    fun findByPhone(@RequestParam phone: String) = OwnerResponse
+        .getOwnerResponse(ownerComponent.findByPhone(phone))
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
-    fun sendOwner(@PathVariable(name = "id") id: Long)=producerService.produceOwner(ownerComponent.findById(id))//producerService.produce(ownerComponent.findById(id).fullName)
+    fun sendOwner(@PathVariable(name = "id") id: Long)=producerService
+        .produceOwner(ownerComponent.findById(id))
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,7 +52,8 @@ class OwnerController(private val ownerComponent: OwnerComponent,
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(@PathVariable(name = "id") id:Long,@RequestBody owner:Owner)= ownerComponent.save(owner)
+    fun update(@PathVariable(name = "id") id:Long,@RequestBody owner:Owner)= ownerComponent
+        .save(owner)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
