@@ -27,14 +27,14 @@ class VetController(private val vetComponent: VetComponent,
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestParam name:String)= vetComponent.findByName(name).map{
+    fun findByName(@RequestBody name:String)= vetComponent.findByName(name).map{
         vet ->VetResponse
         .getVetResponse(vet)
     }
 
     @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@RequestParam phone: String) = VetResponse
+    fun findByPhone(@RequestBody phone: String) = VetResponse
         .getVetResponse(vetComponent.findByPhone(phone))
 
     @GetMapping("/{id}/send")
