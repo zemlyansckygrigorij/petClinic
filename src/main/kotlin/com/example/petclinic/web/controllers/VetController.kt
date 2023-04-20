@@ -3,6 +3,7 @@ package com.example.petclinic.web.controllers
 import com.example.petclinic.db.entity.Vet
 import com.example.petclinic.db.services.VetComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.model.response.VetResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -14,19 +15,27 @@ class VetController(private val vetComponent: VetComponent,
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
-    fun findAll() = vetComponent.findAll()
+    fun findAll() = vetComponent.findAll().map{
+            vet ->VetResponse
+        .getVetResponse(vet)
+    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable(name = "id") id:Long) = vetComponent.findById(id)
+    fun findById(@PathVariable(name = "id") id:Long) = VetResponse
+        .getVetResponse(vetComponent.findById(id))
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestParam name:String)= vetComponent.findByName(name)
+    fun findByName(@RequestParam name:String)= vetComponent.findByName(name).map{
+        vet ->VetResponse
+        .getVetResponse(vet)
+    }
 
     @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@RequestParam phone: String) = vetComponent.findByPhone(phone)
+    fun findByPhone(@RequestParam phone: String) = VetResponse
+        .getVetResponse(vetComponent.findByPhone(phone))
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
