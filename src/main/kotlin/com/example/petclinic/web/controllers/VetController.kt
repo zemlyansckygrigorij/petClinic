@@ -1,8 +1,10 @@
 package com.example.petclinic.web.controllers
 
+import com.example.petclinic.db.entity.Gender
 import com.example.petclinic.db.entity.Vet
 import com.example.petclinic.db.services.VetComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.model.request.VetRequest
 import com.example.petclinic.web.model.response.VetResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -47,7 +49,18 @@ class VetController(private val vetComponent: VetComponent,
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(@PathVariable(name = "id") id:Long, @RequestBody vet:Vet) = vetComponent.save(vet)
+    fun update(@PathVariable(name = "id") id:Long, @RequestBody vetRequest: VetRequest) {
+        println(vetRequest)
+        var vetFromTable = vetComponent.findById(id)
+        if(vetRequest.gender.equals("MALE"))vetFromTable.gender = Gender.MALE
+        if(vetRequest.gender.equals("FEMALE"))vetFromTable.gender = Gender.FEMALE
+        vetFromTable.address = vetRequest.address
+        vetFromTable.birthday = vetRequest.birthday
+        vetFromTable.phone = vetRequest.phone
+        vetFromTable.fullName = vetRequest.fullName
+        vetFromTable.qualification = vetRequest.qualification
+        vetComponent.save(vetFromTable)
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
