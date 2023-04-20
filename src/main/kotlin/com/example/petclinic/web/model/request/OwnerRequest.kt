@@ -1,13 +1,15 @@
 package com.example.petclinic.web.model.request
 
 import com.example.petclinic.db.entity.Owner
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
+import java.util.*
 
 @Schema(description = "Создание записи о собственнике")
-data class OwnerCreateRequest (
+data class OwnerRequest(
     @Schema(description = "ФИО", example = "Эйлер Леонард Мартинович")
     @NotBlank
     @Size(max = 100)
@@ -31,16 +33,18 @@ data class OwnerCreateRequest (
     @Schema(description = "День Рождения", example = "1990-01-30")
     @NotBlank
     @Size(max = 100)
-    @JsonProperty("birthday") var birthday: String
+    @JsonProperty("birthday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    val birthday: Date
 ){
     companion object {
-        fun getOwnerCreateRequest(owner: Owner): OwnerCreateRequest {
-            return OwnerCreateRequest(
+        fun getOwnerRequest(owner: Owner): OwnerRequest {
+            return OwnerRequest(
                 owner.fullName,
                 owner.address,
                 owner.phone,
                 owner.gender.toString(),
-                owner.birthday.toString())
+                owner.birthday)
         }
     }
 }
