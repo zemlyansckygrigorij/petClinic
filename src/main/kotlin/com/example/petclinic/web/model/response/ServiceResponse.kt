@@ -26,9 +26,9 @@ data class ServiceResponse (
     ){
         companion object {
             fun getServiceResponse(service: Services): ServiceResponse?{
-                return service.description?.let {it
+                return service.description?.let {description ->
                     ServiceResponse(service.name,
-                        it,
+                        description,
                         service.price,
                     )
                 }
