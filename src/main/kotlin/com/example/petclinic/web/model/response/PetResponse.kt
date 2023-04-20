@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-@Schema(description = "Животное")
+@Schema(description = "Питомец")
 data class PetResponse (
     @Schema(description = "Кличка", example = "Барбос")
     @NotBlank
@@ -35,9 +35,9 @@ data class PetResponse (
 ) {
     companion object {
         fun getPetResponse(pet: Pet): PetResponse? {
-            return pet.name?.let {it
+            return pet.name?.let {name ->
                 PetResponse(
-                    it,
+                    name,
                     pet.kind,
                     pet.age,
                     pet.gender.toString(),
