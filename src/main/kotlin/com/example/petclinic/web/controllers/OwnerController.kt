@@ -3,6 +3,7 @@ package com.example.petclinic.web.controllers
 import com.example.petclinic.db.entity.Owner
 import com.example.petclinic.db.services.OwnerComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.model.response.OwnerResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,19 +20,21 @@ class OwnerController(private val ownerComponent: OwnerComponent,
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
-    fun findAll()=ownerComponent.findAll()
+    fun findAll()=ownerComponent.findAll().map { owner ->OwnerResponse
+        .getOwnerResponse(owner) }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable(name = "id") id: Long)=ownerComponent.findById(id)
+    fun findById(@PathVariable(name = "id") id: Long) = OwnerResponse.getOwnerResponse(ownerComponent.findById(id))//ownerComponent.findById(id)
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestParam name:String)=ownerComponent.findByName(name)
+    fun findByName(@RequestParam name:String)=ownerComponent.findByName(name).map { owner ->OwnerResponse
+        .getOwnerResponse(owner) }
 
     @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@RequestParam phone: String) = ownerComponent.findByPhone(phone)
+    fun findByPhone(@RequestParam phone: String) = OwnerResponse.getOwnerResponse(ownerComponent.findByPhone(phone))
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
