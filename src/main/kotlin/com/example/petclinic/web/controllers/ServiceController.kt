@@ -3,6 +3,7 @@ package com.example.petclinic.web.controllers
 import com.example.petclinic.db.entity.Services
 import com.example.petclinic.db.services.ServiceComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.model.response.ServiceResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -14,15 +15,18 @@ class ServiceController(private val serviceComponent:ServiceComponent,
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
-    fun findAll() = serviceComponent.findAll()
+    fun findAll() = serviceComponent.findAll().map { service -> ServiceResponse
+        .getServiceResponse(service)}
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable(name = "id") id:Long)= serviceComponent.findById(id)
+    fun findById(@PathVariable(name = "id") id:Long)= ServiceResponse
+        .getServiceResponse(serviceComponent.findById(id))
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestParam name:String)= serviceComponent.findByName(name)
+    fun findByName(@RequestParam name:String)= serviceComponent.findByName(name).map { service -> ServiceResponse
+        .getServiceResponse(service)}
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
