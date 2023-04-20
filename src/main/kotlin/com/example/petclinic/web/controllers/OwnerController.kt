@@ -30,14 +30,14 @@ class OwnerController(private val ownerComponent: OwnerComponent,
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestParam name:String)=ownerComponent
+    fun findByName(@RequestBody name:String)=ownerComponent
         .findByName(name)
         .map { owner ->OwnerResponse
         .getOwnerResponse(owner) }
 
     @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@RequestParam phone: String) = OwnerResponse
+    fun findByPhone(@RequestBody phone: String) = OwnerResponse
         .getOwnerResponse(ownerComponent.findByPhone(phone))
 
     @GetMapping("/{id}/send")
