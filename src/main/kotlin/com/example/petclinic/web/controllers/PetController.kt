@@ -1,8 +1,10 @@
 package com.example.petclinic.web.controllers
 
+import com.example.petclinic.db.entity.Gender
 import com.example.petclinic.db.entity.Pet
 import com.example.petclinic.db.services.PetComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.model.request.PetRequest
 import com.example.petclinic.web.model.response.PetResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -45,10 +47,18 @@ class PetController(private val petComponent: PetComponent,
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(@PathVariable(name = "id") id: Long, @RequestBody pet: Pet) = petComponent.save(pet)
+    fun update(@PathVariable(name = "id") id: Long, @RequestBody petRequest: PetRequest) {
+        var petFromTable = petComponent.findById(id)
+        if(petRequest.gender.equals("MALE")) petFromTable.gender = Gender.MALE
+        if(petRequest.gender.equals("FEMALE")) petFromTable.gender = Gender.FEMALE
+        petFromTable.name = petRequest.name
+        petFromTable.age =petRequest.age
+        petFromTable.kind = petRequest.kind
+        petFromTable.idOwner = petRequest.idOwner
+        petComponent.save(petFromTable)
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun delete(@PathVariable(name = "id") id: Long) = petComponent.deleteById(id)
-
 }
