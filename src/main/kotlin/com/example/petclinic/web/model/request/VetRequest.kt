@@ -1,13 +1,15 @@
 package com.example.petclinic.web.model.request
 
 import com.example.petclinic.db.entity.Vet
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
+import java.util.*
 
 @Schema(description = "Создание записи о ветеринаре")
-data class VetCreateRequest  (
+data class VetRequest (
     @Schema(description = "ФИО", example = "Эйлер Леонард Мартинович")
     @NotBlank
     @Size(max = 100)
@@ -36,21 +38,25 @@ data class VetCreateRequest  (
     @Schema(description = "День Рождения", example = "1990-01-30")
     @NotBlank
     @Size(max = 100)
-    @JsonProperty("birthday") var birthday: String
+    @JsonProperty("birthday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    val birthday: Date
 ){
     companion object {
-        fun getVetCreateRequest(vet: Vet): VetCreateRequest?{
+        fun getVetRequest(vet: Vet): VetRequest?{
             return vet.address?.let { address->
                 vet.phone?.let { phone ->
                     vet.qualification?.let { qualification ->
-                        VetCreateRequest(
-                            vet.fullName,
-                            address,
-                            phone,
-                            vet.gender.toString(),
-                            qualification,
-                            vet.birthday.toString()
-                        )
+                        vet.birthday?.let {birthday ->
+                            VetRequest(
+                                vet.fullName,
+                                address,
+                                phone,
+                                vet.gender.toString(),
+                                qualification,
+                                birthday
+                            )
+                        }
                     }
                 }
             }
