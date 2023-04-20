@@ -24,7 +24,7 @@ class PetController(private val petComponent: PetComponent,
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestParam name: String) = petComponent
+    fun findByName(@RequestBody name: String) = petComponent
         .findByName(name)
         .map { pet -> PetResponse.getPetResponse(pet) }
 
