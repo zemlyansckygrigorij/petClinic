@@ -1,6 +1,6 @@
 package com.example.petclinic.db.services
 
-import com.example.petclinic.db.entity.Service
+import com.example.petclinic.db.entity.Services
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +14,7 @@ class ServiceComponentImplTest @Autowired constructor( val serviceComponent: Ser
         val services = serviceComponent.findAll()
         assertEquals(services.size,11)
         val id = services.maxBy{it.id}.id + 1
-        val service = Service(id,"name","description",1.9)
+        val service = Services(id,"name","description",1.9)
         val serviceSave = serviceComponent.save(service)
         assertEquals(serviceComponent.findAll().size,12)
         val serviceFrom = serviceComponent.findById(serviceSave.id)
