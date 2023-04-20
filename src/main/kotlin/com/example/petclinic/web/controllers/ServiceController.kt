@@ -25,7 +25,7 @@ class ServiceController(private val serviceComponent:ServiceComponent,
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestParam name:String)= serviceComponent.findByName(name).map { service -> ServiceResponse
+    fun findByName(@RequestBody name:String)= serviceComponent.findByName(name).map { service -> ServiceResponse
         .getServiceResponse(service)}
 
     @GetMapping("/{id}/send")
