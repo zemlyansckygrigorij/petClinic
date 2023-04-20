@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
 @Schema(description = "Создание записи о питомце")
-data class PetCreateRequest (
+data class PetRequest  (
     @Schema(description = "Кличка", example = "Барбос")
     @NotBlank
     @Size(max = 100)
@@ -34,9 +34,9 @@ data class PetCreateRequest (
     @JsonProperty("idOwner") var idOwner: Int?
 ) {
     companion object {
-        fun getPetCreateRequest (pet: Pet): PetCreateRequest ? {
+        fun getPetRequest (pet: Pet): PetRequest? {
             return pet.name?.let {name ->
-                PetCreateRequest (
+                PetRequest(
                     name,
                     pet.kind,
                     pet.age,
