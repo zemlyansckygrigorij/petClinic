@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
 @Schema(description = "Создание записи об услуге")
-data class ServiceCreateRequest (
+data class ServiceRequest(
     @Schema(description = "Название", example = "Прививка")
     @NotBlank
     @Size(max = 100)
@@ -25,9 +25,9 @@ data class ServiceCreateRequest (
 
 ){
     companion object {
-        fun getServiceCreateRequest(service: Services): ServiceCreateRequest?{
+        fun getServiceRequest(service: Services): ServiceRequest?{
             return service.description?.let {description ->
-                ServiceCreateRequest(service.name,
+                ServiceRequest(service.name,
                     description,
                     service.price,
                 )
