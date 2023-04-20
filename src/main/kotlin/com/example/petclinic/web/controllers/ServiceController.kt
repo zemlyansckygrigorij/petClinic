@@ -1,8 +1,10 @@
 package com.example.petclinic.web.controllers
 
+import com.example.petclinic.db.entity.Gender
 import com.example.petclinic.db.entity.Services
 import com.example.petclinic.db.services.ServiceComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.model.request.ServiceRequest
 import com.example.petclinic.web.model.response.ServiceResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -38,7 +40,15 @@ class ServiceController(private val serviceComponent:ServiceComponent,
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun save(@RequestBody service:Services)= serviceComponent.save(service)
+    fun save(
+        @PathVariable(name = "id") id: Long,
+        @RequestBody serviceRequest: ServiceRequest){
+        var serviceFromTable = serviceComponent.findById(id)
+        serviceFromTable.name = serviceRequest.name
+        serviceFromTable.description =serviceRequest.description
+        serviceFromTable.price = serviceRequest.price
+        serviceComponent.save(serviceFromTable)
+    }
 
 
     @DeleteMapping("/{id}")
