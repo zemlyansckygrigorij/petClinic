@@ -8,27 +8,52 @@ import jakarta.validation.constraints.Size
 
 @Schema(description = "Питомец")
 data class PetResponse (
-    @Schema(description = "Кличка", example = "Барбос")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Кличка",
+        example = "Барбос",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("name") var name: String,
 
-    @Schema(description = "Вид", example = "Собака")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Вид",
+        example = "Собака",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("kind") var kind: String,
 
-    @Schema(description = "Возраст", example = "14")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Возраст",
+        example = "14",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("age") var age: Int?,
 
-    @Schema(description = "Пол", example = "Самец")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Пол",
+        example = "Самец",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("gender") var gender: String,
 
-    @Schema(description = "идентификатор владельца", example = "123")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "идентификатор владельца",
+        example = "123",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("idOwner") var idOwner: Int?
