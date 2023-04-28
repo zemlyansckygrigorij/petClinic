@@ -30,13 +30,8 @@ https://www.bezkoder.com/spring-boot-swagger-3/
 https://www.bezkoder.com/swagger-3-annotations/
 https://idratherbewriting.com/learnapidoc/
 https://starkovden.github.io/course-overview.html
+https://gist.github.com/wshirey/1f5d9bc7f8b5891a454f9e5d2d4c122f
 
-@Tag\/
-@Operation\/
-@Parameters and @Parameter\/
-@Schema
-@Hidden or @Parameter(hidden = true) or @Operation(hidden = true)
-@ApiResponses and @ApiResponse\/
 
 */
 @RestController
@@ -55,7 +50,7 @@ class OwnerController(private val ownerComponent: OwnerComponent,
     @ResponseStatus(HttpStatus.FOUND)
     @Operation(
         description = "Получение всех собственников",
-        summary = "Retrieve a Tutorial by Id",
+        summary = "Retrieve all owners",
         tags = ["GetMapping", "All" ],
         externalDocs = ExternalDocumentation(description= "API Documentation",
         url= "https://openweathermap.org/api"),
@@ -80,15 +75,20 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         ApiResponse(responseCode = "201", description = "error")
     ])
     fun findById(
-        @Parameter(description = "Идентификатор собственника", example = "68406", required = true,
-            style = ParameterStyle.DEFAULT,hidden = false)
+        @Parameter(
+            description = "Идентификатор собственника",
+            example = "68406",
+            required = true,
+            style = ParameterStyle.DEFAULT,
+            hidden = false)
         @PathVariable(name = "id") id: Long
     ) = OwnerResponse
-        .getOwnerResponse(ownerComponent.findById(id))//ownerComponent.findById(id)
+        .getOwnerResponse(ownerComponent.findById(id))
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    @Operation(description = "Получение списка собственников по имени",
+    @Operation(
+        description = "Получение списка собственников по имени",
         summary = "get owners by name",
         tags = ["GetMapping","name"],
         externalDocs = ExternalDocumentation(description= "API Documentation",
@@ -100,8 +100,12 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         ApiResponse(responseCode = "201", description = "error")
     ])
     fun findByName(
-        @Parameter(description = "Имя собственника", example = "Лена", required = true,
-            style = ParameterStyle.DEFAULT,hidden = false)
+        @Parameter(
+            description = "Имя собственника",
+            example = "Лена",
+            required = true,
+            style = ParameterStyle.DEFAULT,
+            hidden = false)
         @RequestBody name:String
     )=ownerComponent
         .findByName(name)
@@ -123,8 +127,12 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         ApiResponse(responseCode = "201", description = "error")
     ])
     fun findByPhone(
-        @Parameter(description = "Телефон собственника", example = "684-06-09", required = true,
-            style = ParameterStyle.DEFAULT,hidden = false)
+        @Parameter(
+            description = "Телефон собственника",
+            example = "684-06-09",
+            required = true,
+            style = ParameterStyle.DEFAULT,
+            hidden = false)
         @RequestBody phone: String
     ) = OwnerResponse
         .getOwnerResponse(ownerComponent.findByPhone(phone))
@@ -144,8 +152,13 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         ApiResponse(responseCode = "201", description = "error")
     ])
     fun sendOwner(
-        @Parameter(name = "title", description = "Идентификатор собственника", example = "68406", required = true,
-            style = ParameterStyle.DEFAULT,hidden = false)
+        @Parameter(
+            name = "title",
+            description = "Идентификатор собственника",
+            example = "68406",
+            required = true,
+            style = ParameterStyle.DEFAULT,
+            hidden = false)
         @PathVariable(name = "id") id: Long
     )=producerService
         .produceOwner(ownerComponent.findById(id))
@@ -166,8 +179,17 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         ApiResponse(responseCode = "201", description = "error")
     ])
     fun create(
-         @Parameter(description = "Данные  собственника", example = "68406", required = true,
-            style = ParameterStyle.DEFAULT)
+         @Parameter(
+             description = "Данные  собственника",
+             example = """{
+                            "fullName": "Test123",
+                            "address": "Test",
+                            "phone": "23-35-32124",
+                            "birthday": "1990-01-30",
+                            "gender": "MALE"
+                        }""",
+             required = true,
+             style = ParameterStyle.DEFAULT)
         @RequestBody owner: Owner
     ): Owner = ownerComponent.save(owner)
 
@@ -183,22 +205,35 @@ class OwnerController(private val ownerComponent: OwnerComponent,
     )
     @Parameters(
         *[
-        Parameter(name = "title", description = "Search Tutorials by title", hidden = false),
-        Parameter(name = "page", description = "Page number, starting from 0", required = true, hidden = false),
-        Parameter(name = "size", description = "Number of items per page", required = true, hidden = false)
+        Parameter(name = "id", description = "Идентификатор собственника",required = true, hidden = false),
+        Parameter(name = "ownerRequest", description = "Данные  собственника", required = true, hidden = false)
     ])
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = ""),
         ApiResponse(responseCode = "201", description = "error")
     ])
     fun update(
-        @Parameter(description = "Идентификатор собственника", example = "68406", required = true,
-            style = ParameterStyle.DEFAULT, hidden = false)
+        @Parameter(
+            description = "Идентификатор собственника",
+            example = "68406",
+            required = true,
+            style = ParameterStyle.DEFAULT,
+            hidden = false)
         @PathVariable(name = "id") id:Long,
 
-        @Parameter(description = "Идентификатор собственника", example = "68406", required = true,
-            style = ParameterStyle.DEFAULT, hidden = false)
-        @RequestBody ownerRequest:OwnerRequest
+        @Parameter(
+            description = "Данные  собственника",
+            example = """{
+                            "full_name": "Test111",
+                            "address": "Test222",
+                            "phone": "23-35-232433",
+                            "birthday": "1990-01-3044",
+                            "gender": "MALE"
+                        }""",
+            required = true,
+            style = ParameterStyle.DEFAULT,
+            hidden = false)
+        @RequestBody ownerRequest: OwnerRequest
     ) {
         val ownerFromTable = ownerComponent.findById(id)
         if(ownerRequest.gender.equals("MALE"))ownerFromTable.gender = Gender.MALE
@@ -226,7 +261,10 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         ApiResponse(responseCode = "201", description = "error")
     ])
     fun delete(
-        @Parameter(description = "Идентификатор собственника", example = "68406", required = true,
+        @Parameter(
+            description = "Идентификатор собственника",
+            example = "68406",
+            required = true,
             style = ParameterStyle.DEFAULT)
         @PathVariable(name = "id") id:Long
     ) = ownerComponent.deleteById(id)
