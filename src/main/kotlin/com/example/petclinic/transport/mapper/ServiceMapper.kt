@@ -8,9 +8,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 class ServiceMapper {
     val mapper = jacksonObjectMapper()
     fun getServicesDto(service: Services): ServiceDto? {
-        return service.description?.let {description->
+        return service.description?.let {it
             ServiceDto(service.name,
-                description,
+                it,
                 service.price,
             )
         }

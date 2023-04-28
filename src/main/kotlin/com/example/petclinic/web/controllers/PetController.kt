@@ -1,11 +1,8 @@
 package com.example.petclinic.web.controllers
 
-import com.example.petclinic.db.entity.Gender
 import com.example.petclinic.db.entity.Pet
 import com.example.petclinic.db.services.PetComponent
 import com.example.petclinic.transport.service.ProducerService
-import com.example.petclinic.web.model.request.PetRequest
-import com.example.petclinic.web.model.response.PetResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -17,25 +14,19 @@ class PetController(private val petComponent: PetComponent,
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
-    fun findAll() = petComponent.findAll().map { pet -> PetResponse.getPetResponse(pet) }
+    fun findAll() = petComponent.findAll()
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable(name = "id") id: Long) = PetResponse
-        .getPetResponse(petComponent.findById(id))
+    fun findById(@PathVariable(name = "id") id: Long) = petComponent.findById(id)
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestBody name: String) = petComponent
-        .findByName(name)
-        .map { pet -> PetResponse.getPetResponse(pet) }
-
+    fun findByName(@RequestParam name: String) = petComponent.findByName(name)
 
     @GetMapping("/owner/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByOwnerId(@PathVariable(name = "id") id: Long) =petComponent
-        .findByOwnerId(id)
-        .map { pet -> PetResponse.getPetResponse(pet) }
+    fun findByOwnerId(@PathVariable(name = "id") id: Long) = petComponent.findByOwnerId(id)
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
@@ -47,18 +38,10 @@ class PetController(private val petComponent: PetComponent,
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(@PathVariable(name = "id") id: Long, @RequestBody petRequest: PetRequest) {
-        var petFromTable = petComponent.findById(id)
-        if(petRequest.gender.equals("MALE")) petFromTable.gender = Gender.MALE
-        if(petRequest.gender.equals("FEMALE")) petFromTable.gender = Gender.FEMALE
-        petFromTable.name = petRequest.name
-        petFromTable.age =petRequest.age
-        petFromTable.kind = petRequest.kind
-        petFromTable.idOwner = petRequest.idOwner
-        petComponent.save(petFromTable)
-    }
+    fun update(@PathVariable(name = "id") id: Long, @RequestBody pet: Pet) = petComponent.save(pet)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun delete(@PathVariable(name = "id") id: Long) = petComponent.deleteById(id)
+
 }

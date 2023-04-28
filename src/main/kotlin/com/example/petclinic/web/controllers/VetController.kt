@@ -1,11 +1,8 @@
 package com.example.petclinic.web.controllers
 
-import com.example.petclinic.db.entity.Gender
 import com.example.petclinic.db.entity.Vet
 import com.example.petclinic.db.services.VetComponent
 import com.example.petclinic.transport.service.ProducerService
-import com.example.petclinic.web.model.request.VetRequest
-import com.example.petclinic.web.model.response.VetResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -17,27 +14,19 @@ class VetController(private val vetComponent: VetComponent,
 
     @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
-    fun findAll() = vetComponent.findAll().map{
-            vet ->VetResponse
-        .getVetResponse(vet)
-    }
+    fun findAll() = vetComponent.findAll()
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findById(@PathVariable(name = "id") id:Long) = VetResponse
-        .getVetResponse(vetComponent.findById(id))
+    fun findById(@PathVariable(name = "id") id:Long) = vetComponent.findById(id)
 
     @GetMapping("/name")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByName(@RequestBody name:String)= vetComponent.findByName(name).map{
-        vet ->VetResponse
-        .getVetResponse(vet)
-    }
+    fun findByName(@RequestParam name:String)= vetComponent.findByName(name)
 
     @GetMapping("/phone")
     @ResponseStatus(HttpStatus.FOUND)
-    fun findByPhone(@RequestBody phone: String) = VetResponse
-        .getVetResponse(vetComponent.findByPhone(phone))
+    fun findByPhone(@RequestParam phone: String) = vetComponent.findByPhone(phone)
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
@@ -49,18 +38,7 @@ class VetController(private val vetComponent: VetComponent,
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(@PathVariable(name = "id") id:Long, @RequestBody vetRequest: VetRequest) {
-        println(vetRequest)
-        var vetFromTable = vetComponent.findById(id)
-        if(vetRequest.gender.equals("MALE"))vetFromTable.gender = Gender.MALE
-        if(vetRequest.gender.equals("FEMALE"))vetFromTable.gender = Gender.FEMALE
-        vetFromTable.address = vetRequest.address
-        vetFromTable.birthday = vetRequest.birthday
-        vetFromTable.phone = vetRequest.phone
-        vetFromTable.fullName = vetRequest.fullName
-        vetFromTable.qualification = vetRequest.qualification
-        vetComponent.save(vetFromTable)
-    }
+    fun update(@PathVariable(name = "id") id:Long, @RequestBody vet:Vet) = vetComponent.save(vet)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

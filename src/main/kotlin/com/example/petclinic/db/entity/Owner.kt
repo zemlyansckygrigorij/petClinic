@@ -13,7 +13,7 @@ import jakarta.persistence.*
 class Owner(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+     val id: Long,
 
     @Column(name = "full_name", nullable = false)
      var fullName: String,

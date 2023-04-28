@@ -15,18 +15,18 @@ class Pet(
     val id: Long,
 
     @Column(name = "kind", nullable = false)
-    var kind: String,
+    val kind: String,
 
     @Column(name = "name", nullable = true)
-    var name: String? = null,
+    val name: String? = null,
 
     @Column(name = "age", nullable = true)
-    var age: Int? = null,
+    val age: Int? = null,
 
     @Column(name = "id_owner", nullable = true)
-    var idOwner: Int? = null,
+    val idOwner: Int? = null,
 
     @Column(name = "gender", nullable = true)
     @Enumerated(EnumType.STRING)
-    var gender: Gender? = null
+    val gender: Gender? = null
 )

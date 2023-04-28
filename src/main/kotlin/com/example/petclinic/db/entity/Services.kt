@@ -17,11 +17,11 @@ class Services(
     val id: Long,
 
     @Column(name = "name", nullable = false)
-    var name: String,
+    val name: String,
 
     @Column(name = " description", nullable = true)
-    var description: String? = null,
+    val description: String? = null,
 
     @Column(name = "price", nullable = false)
-    var price: Double
+    val price: Double
 )
