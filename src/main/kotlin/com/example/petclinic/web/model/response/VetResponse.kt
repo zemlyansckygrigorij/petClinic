@@ -6,34 +6,64 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-@Schema(description = "Услуга")
+@Schema(description = "Специалист")
 data class VetResponse (
-    @Schema(description = "ФИО", example = "Эйлер Леонард Мартинович")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "ФИО",
+        example = "Эйлер Леонард Мартинович",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("full_name") var fullName: String,
 
-    @Schema(description = "Адрес", example = "Москва, Шаболовка 36")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Адрес",
+        example = "Москва, Шаболовка 36",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("address") var address: String,
 
-    @Schema(description = "Телефон", example = "89313450202")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Телефон",
+        example = "89313450202",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("phone") var phone: String,
 
-    @Schema(description = "Пол", example = "Мужской")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Пол",
+        example = "Мужской",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("gender") var gender: String,
 
-    @Schema(description = "Квалификация", example = "Высшая")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Квалификация",
+        example = "Высшая",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("qualification") var qualification: String,
 
-    @Schema(description = "День Рождения", example = "1990-01-30")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "День Рождения",
+        example = "1990-01-30",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("birthday") var birthday: String
