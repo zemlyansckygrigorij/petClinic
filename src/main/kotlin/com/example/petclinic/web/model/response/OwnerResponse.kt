@@ -8,27 +8,52 @@ import jakarta.validation.constraints.Size
 
 @Schema(description = "Собственник")
 data class OwnerResponse(
-    @Schema(description = "ФИО", example = "Эйлер Леонард Мартинович")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "ФИО",
+        example = "Эйлер Леонард Мартинович",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("full_name") var fullName: String,
 
-    @Schema(description = "Адрес", example = "Москва, Шаболовка 36")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Адрес",
+        example = "Москва, Шаболовка 36",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("address") var address: String,
 
-    @Schema(description = "Телефон", example = "89313450202")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Телефон",
+        example = "89313450202",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("phone") var phone: String,
 
-    @Schema(description = "Пол", example = "Мужской")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Пол",
+        example = "Мужской",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("gender") var gender: String,
 
-    @Schema(description = "День Рождения", example = "1990-01-30")
+    @Schema(
+        additionalProperties = Schema.AdditionalPropertiesValue.TRUE,
+        requiredMode = Schema.RequiredMode.REQUIRED,
+        description = "День Рождения",
+        example = "1990-01-30",
+        required = true)
     @NotBlank
     @Size(max = 100)
     @JsonProperty("birthday") var birthday: String
