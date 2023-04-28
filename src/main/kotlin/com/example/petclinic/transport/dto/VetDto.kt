@@ -6,7 +6,7 @@ import jakarta.persistence.*
 import java.util.*
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-data class VetDto  (
+data class VetDto (
     @JsonProperty("full_name") var fullName: String,
     @JsonProperty("address") var address: String,
     @JsonProperty("phone") var phone: String,
