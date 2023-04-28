@@ -8,17 +8,32 @@ import jakarta.validation.constraints.Size
 
 @Schema(description = "Услуга")
 data class ServiceResponse (
-    @Schema(description = "Название", example = "Прививка")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Название",
+        example = "Прививка",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("name") var name: String,
 
-    @Schema(description = "Описание", example = "Вакцинация от клеща")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Описание",
+        example = "Вакцинация от клеща",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("description") var description: String,
 
-    @Schema(description = "Цена", example = "23.4")
+    @Schema(
+        accessMode = Schema.AccessMode.READ_ONLY,
+        description = "Цена",
+        example = "23.4",
+        required = true
+    )
     @NotBlank
     @Size(max = 100)
     @JsonProperty("price") var price: Double
