@@ -4,6 +4,8 @@ import com.example.petclinic.db.entity.Gender
 import com.example.petclinic.db.entity.Pet
 import com.example.petclinic.db.services.PetComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.annotation.InternalServerError
+import com.example.petclinic.web.annotation.ResponseOk
 import com.example.petclinic.web.model.request.PetRequest
 import com.example.petclinic.web.model.response.PetResponse
 import io.swagger.v3.oas.annotations.ExternalDocumentation
@@ -39,6 +41,8 @@ class PetController(private val petComponent: PetComponent,
             url= "https://openweathermap.org/api"),
         hidden = false)
     @ApiResponse(responseCode = "200", description = "list of PetResponse")
+    @InternalServerError
+    @ResponseOk
     fun findAll() = petComponent.findAll().map { pet -> PetResponse.getPetResponse(pet) }
 
     @GetMapping("/{id}")
@@ -52,8 +56,10 @@ class PetController(private val petComponent: PetComponent,
         hidden = false)
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "PetResponse"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "204", description = "No Content")
     ])
+    @InternalServerError
+    @ResponseOk
     fun findById(
         @Parameter(
             description = "Идентификатор животного",
@@ -76,8 +82,10 @@ class PetController(private val petComponent: PetComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "list of PetResponse"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "204", description = "No Content")
     ])
+    @InternalServerError
+    @ResponseOk
     fun findByName(
         @Parameter(
             description = "Имя животного",
@@ -101,8 +109,10 @@ class PetController(private val petComponent: PetComponent,
         hidden = false)
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "list of PetResponse"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "204", description = "No Content")
     ])
+    @InternalServerError
+    @ResponseOk
     fun findByOwnerId(@PathVariable(name = "id") id: Long) =petComponent
         .findByOwnerId(id)
         .map { pet -> PetResponse.getPetResponse(pet) }
@@ -119,8 +129,10 @@ class PetController(private val petComponent: PetComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "500", description = "Internal Server Error")
     ])
+    @InternalServerError
+    @ResponseOk
     fun sendPet(
         @Parameter(
             name = "title",
@@ -143,8 +155,10 @@ class PetController(private val petComponent: PetComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "Owner"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "201", description = "Created")
     ])
+    @InternalServerError
+    @ResponseOk
     fun create(
         @Parameter(
             description = "Данные животного",
@@ -169,9 +183,11 @@ class PetController(private val petComponent: PetComponent,
             Parameter(name = "petRequest", description = "Данные животного", required = true, hidden = false)
         ])
     @ApiResponses(*[
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "400", description = "Bad Request"),
+        ApiResponse(responseCode = "200", description = "OK")
     ])
+    @InternalServerError
+    @ResponseOk
     fun update(
         @Parameter(
             description = "Идентификатор животного",
@@ -216,9 +232,11 @@ class PetController(private val petComponent: PetComponent,
         hidden = false
     )
     @ApiResponses(*[
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "200", description = "Ok"),
+        ApiResponse(responseCode = "400", description = "Bad Request")
     ])
+    @InternalServerError
+    @ResponseOk
     fun delete(
         @Parameter(
             description = "Идентификатор животного",
