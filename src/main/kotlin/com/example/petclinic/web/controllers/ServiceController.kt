@@ -3,6 +3,8 @@ package com.example.petclinic.web.controllers
 import com.example.petclinic.db.entity.Services
 import com.example.petclinic.db.services.ServiceComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.annotation.InternalServerError
+import com.example.petclinic.web.annotation.ResponseOk
 import com.example.petclinic.web.model.request.ServiceRequest
 import com.example.petclinic.web.model.response.ServiceResponse
 import io.swagger.v3.oas.annotations.ExternalDocumentation
@@ -39,6 +41,8 @@ class ServiceController(private val serviceComponent:ServiceComponent,
         hidden = false
     )
     @ApiResponse(responseCode = "200", description = "list of ServiceResponse")
+    @InternalServerError
+    @ResponseOk
     fun findAll() = serviceComponent.findAll().map { service -> ServiceResponse
         .getServiceResponse(service)}
 
@@ -53,8 +57,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
         hidden = false)
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "ServiceResponse"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "204", description = "No Content")
     ])
+    @InternalServerError
+    @ResponseOk
     fun findById(
         @Parameter(
             description = "Идентификатор услуги",
@@ -77,8 +83,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "list of ServiceResponse"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "204", description = "No Content")
     ])
+    @InternalServerError
+    @ResponseOk
     fun findByName(
         @Parameter(
             description = "Название услуги",
@@ -101,8 +109,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "500", description = "Internal Server Error")
     ])
+    @InternalServerError
+    @ResponseOk
     fun sendService(
         @Parameter(
             name = "title",
@@ -125,8 +135,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "Owner"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "201", description = "Created")
     ])
+    @InternalServerError
+    @ResponseOk
     fun create(
         @Parameter(
             description = "Данные услуги",
@@ -155,9 +167,11 @@ class ServiceController(private val serviceComponent:ServiceComponent,
             Parameter(name = "serviceRequest", description = "Данные  услуги", required = true, hidden = false)
         ])
     @ApiResponses(*[
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "400", description = "Bad Request"),
+        ApiResponse(responseCode = "200", description = "OK")
     ])
+    @InternalServerError
+    @ResponseOk
     fun save(
         @Parameter(
             description = "Идентификатор услуги",
@@ -198,9 +212,11 @@ class ServiceController(private val serviceComponent:ServiceComponent,
         hidden = false
     )
     @ApiResponses(*[
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "200", description = "Ok"),
+        ApiResponse(responseCode = "400", description = "Bad Request")
     ])
+    @InternalServerError
+    @ResponseOk
     fun delete(
         @Parameter(
             description = "Идентификатор услуги",
