@@ -54,10 +54,10 @@ class PetController(private val petComponent: PetComponent,
         externalDocs = ExternalDocumentation(description= "API Documentation",
             url= "https://openweathermap.org/api"),
         hidden = false)
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "PetResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun findById(
@@ -80,10 +80,10 @@ class PetController(private val petComponent: PetComponent,
             url= "https://openweathermap.org/api"),
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "list of PetResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun findByName(
@@ -107,10 +107,10 @@ class PetController(private val petComponent: PetComponent,
         externalDocs = ExternalDocumentation(description= "API Documentation",
             url= "https://openweathermap.org/api"),
         hidden = false)
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "list of PetResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun findByOwnerId(@PathVariable(name = "id") id: Long) =petComponent
@@ -127,10 +127,10 @@ class PetController(private val petComponent: PetComponent,
         summary = "send email about pet",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = ""),
         ApiResponse(responseCode = "500", description = "Internal Server Error")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun sendPet(
@@ -153,10 +153,10 @@ class PetController(private val petComponent: PetComponent,
         summary = "create pet",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Owner"),
         ApiResponse(responseCode = "201", description = "Created")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun create(
@@ -178,14 +178,13 @@ class PetController(private val petComponent: PetComponent,
         hidden = false
     )
     @Parameters(
-        *[
             Parameter(name = "id", description = "Идентификатор животного",required = true, hidden = false),
             Parameter(name = "petRequest", description = "Данные животного", required = true, hidden = false)
-        ])
-    @ApiResponses(*[
+        )
+    @ApiResponses(
         ApiResponse(responseCode = "400", description = "Bad Request"),
         ApiResponse(responseCode = "200", description = "OK")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun update(
@@ -211,7 +210,7 @@ class PetController(private val petComponent: PetComponent,
             hidden = false)
         @RequestBody petRequest: PetRequest)
     {
-        var petFromTable = petComponent.findById(id)
+        val petFromTable = petComponent.findById(id)
         if(petRequest.gender.equals("MALE")) petFromTable.gender = Gender.MALE
         if(petRequest.gender.equals("FEMALE")) petFromTable.gender = Gender.FEMALE
         petFromTable.name = petRequest.name
@@ -231,10 +230,10 @@ class PetController(private val petComponent: PetComponent,
         summary = "delete pet by Id",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Ok"),
         ApiResponse(responseCode = "400", description = "Bad Request")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun delete(

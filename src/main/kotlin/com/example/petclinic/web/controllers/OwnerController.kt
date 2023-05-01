@@ -21,8 +21,8 @@ import java.util.*
 
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.swagger.v3.oas.annotations.enums.ParameterStyle
-import io.swagger.v3.oas.annotations.media.Content;
-import org.springframework.http.MediaType;
+import io.swagger.v3.oas.annotations.media.Content
+import org.springframework.http.MediaType
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
@@ -74,10 +74,10 @@ class OwnerController(private val ownerComponent: OwnerComponent,
             url= "https://openweathermap.org/api"),
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Ok"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     @BadRequest
@@ -102,10 +102,10 @@ class OwnerController(private val ownerComponent: OwnerComponent,
             url= "https://openweathermap.org/api"),
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Ok"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @BadRequest
     fun findByName(
@@ -131,11 +131,11 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         summary = "get owner by phone",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "OwnerResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
 
-    ])
+    )
     @InternalServerError
     @BadRequest
     @ResponseOk
@@ -160,10 +160,10 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         summary = "send email about owner",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Ok"),
         ApiResponse(responseCode = "500", description = "Internal Server Error")
-    ])
+    )
     @InternalServerError
     fun sendOwner(
         @Parameter(
@@ -188,10 +188,10 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         summary = "create owner",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Owner"),
         ApiResponse(responseCode = "201", description = "Created")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun create(
@@ -220,14 +220,13 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         hidden = false
     )
     @Parameters(
-        *[
             Parameter(name = "id", description = "Идентификатор собственника",required = true, hidden = false),
             Parameter(name = "ownerRequest", description = "Данные  собственника", required = true, hidden = false)
-        ])
-    @ApiResponses(*[
+        )
+    @ApiResponses(
         ApiResponse(responseCode = "400", description = "Bad Request"),
         ApiResponse(responseCode = "200", description = "OK")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun update(
@@ -274,10 +273,10 @@ class OwnerController(private val ownerComponent: OwnerComponent,
         summary = "delete owner by Id",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Ok"),
         ApiResponse(responseCode = "400", description = "Bad Request")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun delete(

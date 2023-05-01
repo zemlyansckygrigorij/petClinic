@@ -55,10 +55,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
         externalDocs = ExternalDocumentation(description= "API Documentation",
             url= "https://openweathermap.org/api"),
         hidden = false)
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "ServiceResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun findById(
@@ -81,10 +81,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
             url= "https://openweathermap.org/api"),
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "list of ServiceResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun findByName(
@@ -107,10 +107,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
         summary = "send email about service",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = ""),
         ApiResponse(responseCode = "500", description = "Internal Server Error")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun sendService(
@@ -123,7 +123,7 @@ class ServiceController(private val serviceComponent:ServiceComponent,
             hidden = false)
         @PathVariable(name = "id") id: Long)=producerService.produceService(serviceComponent.findById(id))
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
         description = "Создание услуги",
@@ -133,10 +133,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
         summary = "create service",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Owner"),
         ApiResponse(responseCode = "201", description = "Created")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun create(
@@ -162,14 +162,13 @@ class ServiceController(private val serviceComponent:ServiceComponent,
         hidden = false
     )
     @Parameters(
-        *[
             Parameter(name = "id", description = "Идентификатор услуги",required = true, hidden = false),
             Parameter(name = "serviceRequest", description = "Данные  услуги", required = true, hidden = false)
-        ])
-    @ApiResponses(*[
+        )
+    @ApiResponses(
         ApiResponse(responseCode = "400", description = "Bad Request"),
         ApiResponse(responseCode = "200", description = "OK")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun save(
@@ -193,7 +192,7 @@ class ServiceController(private val serviceComponent:ServiceComponent,
             hidden = false)
         @RequestBody serviceRequest: ServiceRequest)
     {
-        var serviceFromTable = serviceComponent.findById(id)
+        val serviceFromTable = serviceComponent.findById(id)
         serviceFromTable.name = serviceRequest.name
         serviceFromTable.description =serviceRequest.description
         serviceFromTable.price = serviceRequest.price
@@ -211,10 +210,10 @@ class ServiceController(private val serviceComponent:ServiceComponent,
         summary = "delete service by Id",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Ok"),
         ApiResponse(responseCode = "400", description = "Bad Request")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun delete(

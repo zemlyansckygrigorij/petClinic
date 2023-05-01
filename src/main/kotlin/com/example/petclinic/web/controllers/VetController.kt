@@ -57,10 +57,10 @@ class VetController(private val vetComponent: VetComponent,
         externalDocs = ExternalDocumentation(description= "API Documentation",
             url= "https://openweathermap.org/api"),
         hidden = false)
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "VetResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun findById(
@@ -83,10 +83,10 @@ class VetController(private val vetComponent: VetComponent,
             url= "https://openweathermap.org/api"),
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "list of VetResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun findByName(
@@ -111,10 +111,10 @@ class VetController(private val vetComponent: VetComponent,
         summary = "get vet by phone",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "VetResponse"),
         ApiResponse(responseCode = "204", description = "No Content")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun findByPhone(@RequestBody phone: String) = VetResponse
@@ -130,10 +130,10 @@ class VetController(private val vetComponent: VetComponent,
         summary = "send email about vet",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = ""),
         ApiResponse(responseCode = "201", description = "error")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun sendVet(
@@ -156,10 +156,10 @@ class VetController(private val vetComponent: VetComponent,
         summary = "create vet",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Owner"),
         ApiResponse(responseCode = "201", description = "Created")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun create(
@@ -188,14 +188,13 @@ class VetController(private val vetComponent: VetComponent,
         hidden = false
     )
     @Parameters(
-        *[
             Parameter(name = "id", description = "Идентификатор специалиста",required = true, hidden = false),
             Parameter(name = "vetRequest", description = "Данные специалиста", required = true, hidden = false)
-        ])
-    @ApiResponses(*[
+        )
+    @ApiResponses(
         ApiResponse(responseCode = "400", description = "Bad Request"),
         ApiResponse(responseCode = "200", description = "OK")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun update(
@@ -241,10 +240,10 @@ class VetController(private val vetComponent: VetComponent,
         summary = "delete vet by Id",
         hidden = false
     )
-    @ApiResponses(*[
+    @ApiResponses(
         ApiResponse(responseCode = "200", description = "Ok"),
         ApiResponse(responseCode = "400", description = "Bad Request")
-    ])
+    )
     @InternalServerError
     @ResponseOk
     fun delete(
