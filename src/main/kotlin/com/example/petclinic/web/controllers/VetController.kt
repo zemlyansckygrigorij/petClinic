@@ -4,6 +4,8 @@ import com.example.petclinic.db.entity.Gender
 import com.example.petclinic.db.entity.Vet
 import com.example.petclinic.db.services.VetComponent
 import com.example.petclinic.transport.service.ProducerService
+import com.example.petclinic.web.annotation.InternalServerError
+import com.example.petclinic.web.annotation.ResponseOk
 import com.example.petclinic.web.model.request.VetRequest
 import com.example.petclinic.web.model.response.VetResponse
 import io.swagger.v3.oas.annotations.ExternalDocumentation
@@ -39,6 +41,8 @@ class VetController(private val vetComponent: VetComponent,
         hidden = false
     )
     @ApiResponse(responseCode = "200", description = "list of VetResponse")
+    @InternalServerError
+    @ResponseOk
     fun findAll() = vetComponent.findAll().map{
             vet ->VetResponse
         .getVetResponse(vet)
@@ -55,8 +59,10 @@ class VetController(private val vetComponent: VetComponent,
         hidden = false)
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "VetResponse"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "204", description = "No Content")
     ])
+    @InternalServerError
+    @ResponseOk
     fun findById(
         @Parameter(
             description = "Идентификатор специалиста",
@@ -79,8 +85,10 @@ class VetController(private val vetComponent: VetComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "list of VetResponse"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "204", description = "No Content")
     ])
+    @InternalServerError
+    @ResponseOk
     fun findByName(
         @Parameter(
             description = "Имя специалиста",
@@ -105,8 +113,10 @@ class VetController(private val vetComponent: VetComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "VetResponse"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "204", description = "No Content")
     ])
+    @InternalServerError
+    @ResponseOk
     fun findByPhone(@RequestBody phone: String) = VetResponse
         .getVetResponse(vetComponent.findByPhone(phone))
 
@@ -124,6 +134,8 @@ class VetController(private val vetComponent: VetComponent,
         ApiResponse(responseCode = "200", description = ""),
         ApiResponse(responseCode = "201", description = "error")
     ])
+    @InternalServerError
+    @ResponseOk
     fun sendVet(
         @Parameter(
             name = "title",
@@ -146,8 +158,10 @@ class VetController(private val vetComponent: VetComponent,
     )
     @ApiResponses(*[
         ApiResponse(responseCode = "200", description = "Owner"),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "201", description = "Created")
     ])
+    @InternalServerError
+    @ResponseOk
     fun create(
         @Parameter(
             description = "Данные специалиста",
@@ -179,9 +193,11 @@ class VetController(private val vetComponent: VetComponent,
             Parameter(name = "vetRequest", description = "Данные специалиста", required = true, hidden = false)
         ])
     @ApiResponses(*[
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "400", description = "Bad Request"),
+        ApiResponse(responseCode = "200", description = "OK")
     ])
+    @InternalServerError
+    @ResponseOk
     fun update(
         @Parameter(
             description = "Идентификатор специалиста",
@@ -226,9 +242,11 @@ class VetController(private val vetComponent: VetComponent,
         hidden = false
     )
     @ApiResponses(*[
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "201", description = "error")
+        ApiResponse(responseCode = "200", description = "Ok"),
+        ApiResponse(responseCode = "400", description = "Bad Request")
     ])
+    @InternalServerError
+    @ResponseOk
     fun delete(
         @Parameter(
             description = "Идентификатор специалиста",
