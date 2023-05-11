@@ -18,14 +18,14 @@ interface OwnerRepo: JpaRepository<Owner, Long>{
             + "from owner  "
             + "where full_name  LIKE %:name% ",
         nativeQuery = true)
-    open fun findByName(@Param("name") name: String?): ArrayList<Owner>
+    fun findByName(@Param("name") name: String?): ArrayList<Owner>
 
     @Query(value
     = "select * "
             + "from owner  "
             + "where phone  LIKE %:phone% ",
         nativeQuery = true)
-    open fun findByPhone(@Param("phone") phone: String?): Owner?
+    fun findByPhone(@Param("phone") phone: String?): Owner?
 
 
 }

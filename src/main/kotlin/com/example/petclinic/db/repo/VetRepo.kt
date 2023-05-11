@@ -18,12 +18,12 @@ interface VetRepo: JpaRepository<Vet, Long>{
             + "from vet  "
             + "where full_name  LIKE %:name% ",
         nativeQuery = true)
-    open fun findByName(@Param("name") name: String?): ArrayList<Vet>
+    fun findByName(@Param("name") name: String?): ArrayList<Vet>
 
     @Query(value
     = "select * "
             + "from vet  "
             + "where phone  LIKE %:phone% ",
         nativeQuery = true)
-    open fun findByPhone(@Param("phone") phone: String?): Vet?
+    fun findByPhone(@Param("phone") phone: String?): Vet?
 }

@@ -19,14 +19,14 @@ interface PetRepo: JpaRepository<Pet, Long>{
             + "from pet  "
             + "where name  LIKE %:name% ",
         nativeQuery = true)
-    open fun findByName(@Param("name") name: String?): ArrayList<Pet>
+    fun findByName(@Param("name") name: String?): ArrayList<Pet>
 
     @Query(value
     = "select * "
             + "from pet  "
             + "where id_owner = :id",
         nativeQuery = true)
-    open fun findByOwner(@Param("id") id: Long): ArrayList<Pet>
+    fun findByOwner(@Param("id") id: Long): ArrayList<Pet>
 
 
 }
