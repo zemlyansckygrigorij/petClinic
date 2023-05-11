@@ -2,7 +2,9 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Vet
 import com.example.petclinic.db.repo.VetRepo
+import jakarta.persistence.LockModeType
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.jpa.repository.Lock
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Propagation
@@ -21,6 +23,7 @@ class VetComponentImpl @Autowired constructor(
     val vetRepo: VetRepo
 ): VetComponent {
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
         label = ["label"],
@@ -36,6 +39,7 @@ class VetComponentImpl @Autowired constructor(
         return vetRepo.save(vet)
     }
 
+    @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
         label = ["label"],
@@ -50,6 +54,7 @@ class VetComponentImpl @Autowired constructor(
        return vetRepo.findById(id).orElseThrow { throw Exception() }
     }
 
+    @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
         label = ["label"],
@@ -69,7 +74,7 @@ class VetComponentImpl @Autowired constructor(
         }
     }
 
-
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
         label = ["label"],
@@ -86,6 +91,7 @@ class VetComponentImpl @Autowired constructor(
     }
 
 
+    @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
         label = ["label"],
@@ -100,7 +106,7 @@ class VetComponentImpl @Autowired constructor(
         return vetRepo.findByName(name)
     }
 
-
+    @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
         label = ["label"],

@@ -2,7 +2,9 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Owner
 import com.example.petclinic.db.repo.OwnerRepo
+import jakarta.persistence.LockModeType
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.jpa.repository.Lock
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Propagation
@@ -20,6 +22,7 @@ import java.sql.SQLException
 class OwnerComponentImpl @Autowired constructor(
     val  ownerRepo: OwnerRepo
 ): OwnerComponent{
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
         label = ["label"],
@@ -34,7 +37,7 @@ class OwnerComponentImpl @Autowired constructor(
     override fun save(owner: Owner): Owner {
         return ownerRepo.save(owner)
     }
-
+    @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,//уровень изоляции
         label = ["label"],//метка для диспетчера транзакций
@@ -63,7 +66,7 @@ class OwnerComponentImpl @Autowired constructor(
        return ownerRepo.findById(id).orElseThrow { throw Exception() }
     }
 
-
+    @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
         label = ["label"],
@@ -83,6 +86,7 @@ class OwnerComponentImpl @Autowired constructor(
         }
     }
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
         label = ["label"],
@@ -98,6 +102,7 @@ class OwnerComponentImpl @Autowired constructor(
         ownerRepo.deleteById(id)
     }
 
+    @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
         label = ["label"],
@@ -112,6 +117,7 @@ class OwnerComponentImpl @Autowired constructor(
         return ownerRepo.findByName(name)
     }
 
+    @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
         label = ["label"],
