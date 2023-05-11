@@ -18,5 +18,5 @@ interface ServiceRepo: JpaRepository<Services, Long>{
             + "from services  "
             + "where name  LIKE %:name% ",
         nativeQuery = true)
-    open fun findByName(@Param("name") name: String?): ArrayList<Services>
+    fun findByName(@Param("name") name: String?): ArrayList<Services>
 }

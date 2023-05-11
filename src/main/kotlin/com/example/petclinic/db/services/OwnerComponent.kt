@@ -1,6 +1,7 @@
 package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Owner
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * @author Grigoriy Zemlyanskiy

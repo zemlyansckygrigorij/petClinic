@@ -4,6 +4,12 @@ import com.example.petclinic.db.entity.Services
 import com.example.petclinic.db.repo.ServiceRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Isolation
+import org.springframework.transaction.annotation.Propagation
+import org.springframework.transaction.annotation.Transactional
+import java.io.IOException
+import java.lang.RuntimeException
+import java.sql.SQLException
 
 /**
  * @author Grigoriy Zemlyanskiy
@@ -14,14 +20,47 @@ import org.springframework.stereotype.Service
 class ServiceComponentImpl @Autowired constructor(
     val serviceRepo: ServiceRepo
 ): ServiceComponent {
+
+    @Transactional(
+        isolation = Isolation.SERIALIZABLE,
+        label = ["label"],
+        readOnly = false,
+        timeout = 10,
+        propagation = Propagation.REQUIRED,
+        rollbackFor =(arrayOf(RuntimeException::class, IOException::class)),
+        noRollbackFor = (arrayOf(SQLException::class)),
+        transactionManager ="transactionManager",
+        value = ""
+    )
     override fun save(service: Services): Services {
         return serviceRepo.save(service)
     }
 
+    @Transactional(
+        isolation = Isolation.READ_COMMITTED,
+        label = ["label"],
+        readOnly = true,
+        timeout = 10,
+        propagation = Propagation.SUPPORTS,
+        rollbackFor =(arrayOf(RuntimeException::class,IOException::class)),
+        noRollbackFor = (arrayOf(SQLException::class)),
+        transactionManager ="transactionManager",
+        value = "")
     override fun findById(id: Long): Services {
         return serviceRepo.findById(id).orElseThrow { throw Exception() }
     }
 
+
+    @Transactional(
+        isolation = Isolation.READ_COMMITTED,
+        label = ["label"],
+        readOnly = true,
+        timeout = 10,
+        propagation = Propagation.SUPPORTS,
+        rollbackFor =(arrayOf(RuntimeException::class,IOException::class)),
+        noRollbackFor = (arrayOf(SQLException::class)),
+        transactionManager ="transactionManager",
+        value = "")
     override fun findAll(): ArrayList<Services> {
         val serviceList = ArrayList<Services>()
         if(serviceList.addAll( serviceRepo.findAll().toList())){
@@ -31,10 +70,32 @@ class ServiceComponentImpl @Autowired constructor(
         }
     }
 
+    @Transactional(
+        isolation = Isolation.SERIALIZABLE,
+        label = ["label"],
+        readOnly = false,
+        timeout = 10,
+        propagation = Propagation.REQUIRED,
+        rollbackFor =(arrayOf(RuntimeException::class,IOException::class)),
+        noRollbackFor = (arrayOf(SQLException::class)),
+        transactionManager ="transactionManager",
+        value = ""
+    )
     override fun deleteById(id: Long) {
         serviceRepo.deleteById(id)
     }
 
+
+    @Transactional(
+        isolation = Isolation.READ_COMMITTED,
+        label = ["label"],
+        readOnly = true,
+        timeout = 10,
+        propagation = Propagation.SUPPORTS,
+        rollbackFor =(arrayOf(RuntimeException::class,IOException::class)),
+        noRollbackFor = (arrayOf(SQLException::class)),
+        transactionManager ="transactionManager",
+        value = "")
     override fun findByName(name: String): ArrayList<Services> {
         return serviceRepo.findByName(name)
     }
