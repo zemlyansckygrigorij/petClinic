@@ -2,6 +2,8 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Owner
 import com.example.petclinic.db.repo.OwnerRepo
+import com.example.petclinic.web.exceptions.ListOfOwnersNotFoundException
+import com.example.petclinic.web.exceptions.OwnerNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
@@ -60,7 +62,7 @@ class OwnerComponentImpl @Autowired constructor(
         value = ""
     )
     override fun findById(id: Long): Owner {
-       return ownerRepo.findById(id).orElseThrow { throw Exception() }
+       return ownerRepo.findById(id).orElseThrow { throw OwnerNotFoundException() }
     }
 
 
@@ -79,7 +81,7 @@ class OwnerComponentImpl @Autowired constructor(
         if(ownerList.addAll( ownerRepo.findAll().toList())){
             return ownerList
         }else{
-            throw Exception()
+            throw ListOfOwnersNotFoundException()
         }
     }
 
