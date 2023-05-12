@@ -2,6 +2,8 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Services
 import com.example.petclinic.db.repo.ServiceRepo
+import com.example.petclinic.web.exceptions.ListOfServicesNotFoundException
+import com.example.petclinic.web.exceptions.ServiceNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
@@ -47,7 +49,7 @@ class ServiceComponentImpl @Autowired constructor(
         transactionManager ="transactionManager",
         value = "")
     override fun findById(id: Long): Services {
-        return serviceRepo.findById(id).orElseThrow { throw Exception() }
+        return serviceRepo.findById(id).orElseThrow { throw  ServiceNotFoundException() }
     }
 
 
@@ -66,7 +68,7 @@ class ServiceComponentImpl @Autowired constructor(
         if(serviceList.addAll( serviceRepo.findAll().toList())){
             return serviceList
         }else{
-            throw Exception()
+            throw ListOfServicesNotFoundException()
         }
     }
 
