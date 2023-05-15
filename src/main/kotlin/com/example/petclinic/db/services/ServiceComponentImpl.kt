@@ -2,6 +2,7 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Services
 import com.example.petclinic.db.repo.ServiceRepo
+import com.example.petclinic.logging.TransactionLogging
 import com.example.petclinic.web.exceptions.ListOfServicesNotFoundException
 import com.example.petclinic.web.exceptions.ServiceNotFoundException
 import jakarta.persistence.LockModeType
@@ -25,6 +26,7 @@ class ServiceComponentImpl @Autowired constructor(
     val serviceRepo: ServiceRepo
 ): ServiceComponent {
 
+    @TransactionLogging
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
@@ -41,6 +43,7 @@ class ServiceComponentImpl @Autowired constructor(
         return serviceRepo.save(service)
     }
 
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -56,7 +59,7 @@ class ServiceComponentImpl @Autowired constructor(
         return serviceRepo.findById(id).orElseThrow { throw  ServiceNotFoundException() }
     }
 
-
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -77,6 +80,7 @@ class ServiceComponentImpl @Autowired constructor(
         }
     }
 
+    @TransactionLogging
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
@@ -90,9 +94,11 @@ class ServiceComponentImpl @Autowired constructor(
         value = ""
     )
     override fun deleteById(id: Long) {
+        serviceRepo.findById(id).orElseThrow { throw  ServiceNotFoundException() }
         serviceRepo.deleteById(id)
     }
 
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
