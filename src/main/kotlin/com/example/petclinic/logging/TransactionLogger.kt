@@ -32,7 +32,7 @@ class TransactionLogger(){
     fun logAfterThrowingTransactionExecution(joinPoint: JoinPoint?) {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val current = LocalDateTime.now().format(formatter)
-        logger.warn("TransactionWarn - "+  joinPoint?.let { getJoinPointName(it) }+" - "+ current)
+        logger.warn("TransactionWarn - "+  joinPoint?.let { getJoinPointName(it) }+" - "+ current+"\n\n\n-----------------------------------------------------\n\n\n")
     }
     fun getJoinPointName(joinPoint: JoinPoint):String {
         return "class: "+joinPoint.target.javaClass.name.toString()+
