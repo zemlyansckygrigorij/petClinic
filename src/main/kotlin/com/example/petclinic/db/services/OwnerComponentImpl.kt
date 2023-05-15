@@ -2,6 +2,7 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Owner
 import com.example.petclinic.db.repo.OwnerRepo
+import com.example.petclinic.logging.TransactionLogging
 import com.example.petclinic.web.exceptions.ListOfOwnersNotFoundException
 import com.example.petclinic.web.exceptions.OwnerNotFoundException
 import jakarta.persistence.LockModeType
@@ -24,6 +25,7 @@ import java.sql.SQLException
 class OwnerComponentImpl @Autowired constructor(
     val  ownerRepo: OwnerRepo
 ): OwnerComponent{
+    @TransactionLogging
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
@@ -39,6 +41,8 @@ class OwnerComponentImpl @Autowired constructor(
     override fun save(owner: Owner): Owner {
         return ownerRepo.save(owner)
     }
+
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,//уровень изоляции
@@ -68,6 +72,7 @@ class OwnerComponentImpl @Autowired constructor(
        return ownerRepo.findById(id).orElseThrow { throw OwnerNotFoundException() }
     }
 
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -88,6 +93,7 @@ class OwnerComponentImpl @Autowired constructor(
         }
     }
 
+    @TransactionLogging
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
@@ -101,9 +107,11 @@ class OwnerComponentImpl @Autowired constructor(
         value = ""
     )
     override fun deleteById(id: Long) {
+        ownerRepo.findById(id).orElseThrow { throw OwnerNotFoundException() }
         ownerRepo.deleteById(id)
     }
 
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -119,6 +127,7 @@ class OwnerComponentImpl @Autowired constructor(
         return ownerRepo.findByName(name)
     }
 
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,

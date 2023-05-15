@@ -2,6 +2,7 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Pet
 import com.example.petclinic.db.repo.PetRepo
+import com.example.petclinic.logging.TransactionLogging
 import com.example.petclinic.web.exceptions.ListOfPetsNotFoundException
 import com.example.petclinic.web.exceptions.PetNotFoundException
 import jakarta.persistence.LockModeType
@@ -25,6 +26,7 @@ class PetComponentImpl @Autowired constructor(
     val petRepo: PetRepo
 ): PetComponent{
 
+    @TransactionLogging
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
@@ -41,6 +43,8 @@ class PetComponentImpl @Autowired constructor(
         return petRepo.save(pet)
     }
 
+
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -56,6 +60,8 @@ class PetComponentImpl @Autowired constructor(
         return petRepo.findById(id).orElseThrow { throw PetNotFoundException() }
     }
 
+
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -76,6 +82,8 @@ class PetComponentImpl @Autowired constructor(
         }
     }
 
+
+    @TransactionLogging
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
@@ -89,9 +97,12 @@ class PetComponentImpl @Autowired constructor(
         value = ""
     )
     override fun deleteById(id: Long) {
+        petRepo.findById(id).orElseThrow { throw PetNotFoundException() }
         return petRepo.deleteById(id)
     }
 
+
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -107,6 +118,8 @@ class PetComponentImpl @Autowired constructor(
         return petRepo.findByName(name)
     }
 
+
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
