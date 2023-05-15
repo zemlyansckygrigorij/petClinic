@@ -2,6 +2,7 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Vet
 import com.example.petclinic.db.repo.VetRepo
+import com.example.petclinic.logging.TransactionLogging
 import com.example.petclinic.web.exceptions.ListOfVetsNotFoundException
 import com.example.petclinic.web.exceptions.VetNotFoundException
 import jakarta.persistence.LockModeType
@@ -25,6 +26,8 @@ class VetComponentImpl @Autowired constructor(
     val vetRepo: VetRepo
 ): VetComponent {
 
+
+    @TransactionLogging
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
@@ -41,6 +44,8 @@ class VetComponentImpl @Autowired constructor(
         return vetRepo.save(vet)
     }
 
+
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -55,7 +60,7 @@ class VetComponentImpl @Autowired constructor(
     override fun findById(id: Long): Vet {
        return vetRepo.findById(id).orElseThrow { throw VetNotFoundException() }
     }
-
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -76,6 +81,7 @@ class VetComponentImpl @Autowired constructor(
         }
     }
 
+    @TransactionLogging
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
@@ -89,10 +95,12 @@ class VetComponentImpl @Autowired constructor(
         value = ""
     )
     override fun deleteById(id: Long) {
+        vetRepo.findById(id).orElseThrow { throw VetNotFoundException() }
         vetRepo.deleteById(id)
     }
 
 
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
@@ -108,6 +116,7 @@ class VetComponentImpl @Autowired constructor(
         return vetRepo.findByName(name)
     }
 
+    @TransactionLogging
     @Lock(LockModeType.OPTIMISTIC)
     @Transactional(
         isolation = Isolation.READ_COMMITTED,
