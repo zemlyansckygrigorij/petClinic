@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="10">
+    <Properties>
+        <Property name="CONSOLE_LOG_PATTERN">%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="${env:LOG_LEVEL:-INFO}">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>
