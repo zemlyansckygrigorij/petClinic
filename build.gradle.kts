@@ -45,6 +45,10 @@ dependencies {
 // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 
+
+    // https://mvnrepository.com/artifact/io.prometheus/simpleclient
+    implementation("io.prometheus:simpleclient:0.16.0")
+
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
