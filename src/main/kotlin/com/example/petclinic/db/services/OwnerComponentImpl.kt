@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.io.IOException
 import java.lang.RuntimeException
 import java.sql.SQLException
+import java.util.*
 
 /**
  * @author Grigoriy Zemlyanskiy
@@ -139,11 +140,10 @@ class OwnerComponentImpl @Autowired constructor(
         noRollbackFor = (arrayOf(SQLException::class)),
         transactionManager ="transactionManager",
         value = "")
-    override fun findByPhone(phone: String): Owner {
+    override fun findByPhone(phone: String): ArrayList<Owner> {
         ownerRepo.findByPhone(phone).let{
            return  it!!
         }
-        throw Exception()
     }
 }
 /**
