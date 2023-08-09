@@ -117,8 +117,10 @@ class VetController(private val vetComponent: VetComponent,
     )
     @InternalServerError
     @ResponseOk
-    fun findByPhone(@RequestBody phone: String) = VetResponse
-        .getVetResponse(vetComponent.findByPhone(phone))
+    fun findByPhone(@RequestBody phone: String) = vetComponent.findByPhone(phone).map { vet ->
+        VetResponse
+            .getVetResponse(vet)
+    }
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
