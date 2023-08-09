@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
+import java.text.SimpleDateFormat
 
 @Schema(description = "Собственник")
 data class OwnerResponse(
@@ -65,7 +66,8 @@ data class OwnerResponse(
                 owner.address,
                 owner.phone,
                 owner.gender.toString(),
-                owner.birthday.toString())
+                SimpleDateFormat("yyyy-MM-dd").format(owner.birthday)
+            )
         }
     }
 }
