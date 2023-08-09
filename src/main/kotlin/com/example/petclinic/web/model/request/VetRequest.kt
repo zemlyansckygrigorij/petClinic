@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Schema(description = "Создание записи о ветеринаре")
@@ -61,5 +62,8 @@ data class VetRequest (
                 }
             }
         }
+    }
+    override fun toString():String{
+        return """{"fullName": "${this.fullName}","address": "${this.address}","phone": "${this.phone}","birthday": "${SimpleDateFormat("yyyy-MM-dd").format(this.birthday)}","qualification": "${this.qualification}","gender": "${this.gender}"}"""
     }
 }
