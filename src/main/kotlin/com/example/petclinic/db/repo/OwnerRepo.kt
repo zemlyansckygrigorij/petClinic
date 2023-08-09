@@ -25,7 +25,7 @@ interface OwnerRepo: JpaRepository<Owner, Long>{
             + "from owner  "
             + "where phone  LIKE %:phone% ",
         nativeQuery = true)
-    fun findByPhone(@Param("phone") phone: String?): Owner?
+    fun findByPhone(@Param("phone") phone: String?): ArrayList<Owner>?
 
 
 }
