@@ -13,5 +13,5 @@ interface VetComponent {
     fun findAll(): ArrayList<Vet>
     fun deleteById(id: Long)
     fun findByName(name: String): ArrayList<Vet>
-    fun findByPhone(phone: String): Vet
+    fun findByPhone(phone: String): ArrayList<Vet>
 }
