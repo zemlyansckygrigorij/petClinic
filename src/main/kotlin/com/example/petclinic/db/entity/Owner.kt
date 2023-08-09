@@ -2,6 +2,7 @@ package com.example.petclinic.db.entity
 
 import java.util.*
 import jakarta.persistence.*
+import org.springframework.format.annotation.DateTimeFormat
 
 /**
  * @author Grigoriy Zemlyanskiy
@@ -10,10 +11,10 @@ import jakarta.persistence.*
  */
 @Entity
 @Table(name = "owner",schema = "public")
-class Owner(
+data class Owner(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     val id: Long,
+     val id: Long?=null,
 
     @Column(name = "full_name", nullable = false)
      var fullName: String,
@@ -24,7 +25,8 @@ class Owner(
     @Column(name = "phone", nullable = true)
      var phone: String,
 
-    @Column(name = "birthday", nullable = true)
+    @Column(name = "birthday", columnDefinition = "DATE", nullable = true)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
      var birthday: Date,
 
