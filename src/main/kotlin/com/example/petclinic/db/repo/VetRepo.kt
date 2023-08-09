@@ -25,5 +25,5 @@ interface VetRepo: JpaRepository<Vet, Long>{
             + "from vet  "
             + "where phone  LIKE %:phone% ",
         nativeQuery = true)
-    fun findByPhone(@Param("phone") phone: String?): Vet?
+    fun findByPhone(@Param("phone") phone: String?): ArrayList<Vet>?
 }
