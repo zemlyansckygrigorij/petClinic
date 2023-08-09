@@ -13,7 +13,7 @@ import jakarta.persistence.*
 class Vet(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long ,
+    val id: Long?=null ,
 
     @Column(name = "full_name", nullable = false)
     var fullName: String,
