@@ -12,7 +12,7 @@ import jakarta.persistence.*
 abstract class Person(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open val id: Long ,
+    open val id: Long? ,
 
     @Column(name = "fullname", nullable = false)
     open var fullName: String,
