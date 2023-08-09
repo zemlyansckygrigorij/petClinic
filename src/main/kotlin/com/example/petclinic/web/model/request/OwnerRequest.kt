@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
+import java.text.SimpleDateFormat
 import java.util.*
+
 
 @Schema(description = "Создание записи о собственнике")
 data class OwnerRequest(
@@ -46,5 +48,9 @@ data class OwnerRequest(
                 owner.gender.toString(),
                 owner.birthday)
         }
+    }
+    override fun toString():String{
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        return """{"fullName": "${this.fullName}","address": "${this.address}","phone": "${this.phone}","birthday": "${dateFormat.format(this.birthday)}","gender": "${this.gender}"}"""
     }
 }
