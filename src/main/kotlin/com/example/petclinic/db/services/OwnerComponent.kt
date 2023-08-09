@@ -2,6 +2,7 @@ package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Owner
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 /**
  * @author Grigoriy Zemlyanskiy
@@ -14,5 +15,5 @@ interface OwnerComponent {
     fun findAll(): ArrayList<Owner>
     fun deleteById(id: Long)
     fun findByName(name: String) : ArrayList<Owner>
-    fun findByPhone(phone: String) : Owner
+    fun findByPhone(phone: String) : ArrayList<Owner>
 }
