@@ -1,3 +1,5 @@
+
+
 //import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -6,8 +8,10 @@ plugins {
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.jpa") version "1.7.22"
-}
 
+ //   id("org.jetbrains.kotlin.jvm") version "1.9.0-Beta"
+}
+apply(plugin = "org.jetbrains.kotlin.jvm")
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -20,11 +24,17 @@ configurations {
 
 repositories {
     mavenCentral()
+    jcenter()
+    google()
+    maven {
+        url = uri("https://repo1.maven.org/maven2/")
+    }
 }
 
 extra["testcontainersVersion"] = "1.17.6"
 
 dependencies {
+
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -45,6 +55,11 @@ dependencies {
 // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 
+
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin
+  //  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.22")
+
+    //classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
@@ -62,6 +77,11 @@ dependencyManagement {
     }
 }
 
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.22")
+    }
+}
 /*
 tasks.withType<KotlinCompile> {
     kotlinOptions {
@@ -74,4 +94,9 @@ tasks.withType<KotlinCompile> {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "17" }
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
