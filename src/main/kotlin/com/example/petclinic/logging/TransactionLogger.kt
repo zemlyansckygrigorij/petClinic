@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter
 @RequiredArgsConstructor
 class TransactionLogger(){
     companion object {
-        private val logger = LoggerFactory.getLogger(javaClass)
+        private val logger = LoggerFactory.getLogger(TransactionLogger::class.java)
     }
 
     @Before("@annotation(com.example.petclinic.logging.TransactionLogging))")
