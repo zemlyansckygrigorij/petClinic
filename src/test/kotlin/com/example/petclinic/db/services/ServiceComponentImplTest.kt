@@ -43,6 +43,14 @@ class ServiceComponentImplTest @Autowired constructor( val serviceComponent: Ser
 
     @Test
     fun deleteById() {
+        val services = serviceComponent.findAll()
+        assertEquals(services.size,11)
+        val id = services.maxBy{it.id}.id + 1
+        val service = Services(id,"name","description",1.9)
+        val serviceSave = serviceComponent.save(service)
+        assertEquals(serviceComponent.findAll().size,12)
+        serviceComponent.deleteById(serviceSave.id)
+        assertEquals(services.size,11)
     }
 
     @Test
@@ -54,5 +62,4 @@ class ServiceComponentImplTest @Autowired constructor( val serviceComponent: Ser
         assertEquals(service.name, "Pet Wellness Exams")
         assertEquals(service.price, 10.1)
     }
-
 }

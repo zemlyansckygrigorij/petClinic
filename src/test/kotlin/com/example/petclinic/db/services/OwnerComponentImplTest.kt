@@ -59,7 +59,7 @@ class OwnerComponentImplTest @Autowired constructor(val  ownerComponent: OwnerCo
 
     @Test
     fun deleteById() {
-      /*  val owners =ownerComponent.findAll()
+        val owners =ownerComponent.findAll()
         val id = owners.maxBy { it.id!! }.id!!+1
         assertEquals(owners.size, 17)
         val date = Date()
@@ -67,7 +67,7 @@ class OwnerComponentImplTest @Autowired constructor(val  ownerComponent: OwnerCo
         val ownerSave = ownerComponent.save(owner)
         assertEquals(ownerComponent.findAll().size, 18)
         ownerComponent.deleteById(ownerSave.id!!)
-        assertEquals(ownerComponent.findAll().size, 17)*/
+        assertEquals(ownerComponent.findAll().size, 17)
     }
 
     @Test
@@ -93,14 +93,9 @@ class OwnerComponentImplTest @Autowired constructor(val  ownerComponent: OwnerCo
     @Disabled("Disabled until CustomerService is up!")
     @Test
     fun GetAllUsersByGender(){
-
-       /* ownerComponent.findAll().stream().map { o->o.gender }.collect(Collectors.toSet())
+        ownerComponent.findAll().stream().map { o->o.gender }.collect(Collectors.toSet())
         val map3: Map<Gender,List<Owner>> = ownerComponent.findAll().stream()
-            .collect(Collectors.groupingBy(Owner::gender, Collectors.toList()))*/
+            .collect(Collectors.groupingBy(Owner::gender, Collectors.toList()))
         assertEquals(11,21)
-
-       // ownerComponent.findAll().stream().gr
-
-       //     .map(s -> s.getGender()).collect(Collectors.toSet());
     }
 }

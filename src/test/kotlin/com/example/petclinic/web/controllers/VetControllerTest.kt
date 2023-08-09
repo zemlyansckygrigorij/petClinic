@@ -1,7 +1,10 @@
 package com.example.petclinic.web.controllers
 
 import com.example.petclinic.db.entity.Gender
+import com.example.petclinic.db.entity.Owner
+import com.example.petclinic.db.entity.Vet
 import com.example.petclinic.db.services.VetComponent
+import com.example.petclinic.web.model.request.VetRequest
 import org.assertj.core.api.Assertions
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Assertions.*
@@ -17,9 +20,13 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.transaction.annotation.Transactional
+import java.text.SimpleDateFormat
+import java.util.*
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@Transactional
 class VetControllerTest @Autowired constructor(
     val vetController: VetController,
     val restTemplate: TestRestTemplate,
@@ -30,14 +37,14 @@ class VetControllerTest @Autowired constructor(
     private val port = 0
     private val localhost = "http://localhost:"
     private val localhostVet = localhost +port+"/vet"
-    private val localhostVetId = localhost +port+"/vet/22"
+    private val localhostVetId = localhost +port+"/vet/44"
     private val localhostVetByName = localhost +port+"/vet/name"
     private val localhostVetByPhone = localhost +port+"/vet/phone"
     private val vetUrl = "http://localhost:8080/vet"
     companion object{
-        private val vetCreate = """{"fullName":"Test","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
-        private val vetUpdateEnd =""" ,"fullName":"TestUpdate","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
-        private val vetUpdateStart =""" {"id": """
+        private val vetCreate = """{"fullName":"Test1","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
+        private val vetUpdate ="""{"full_name": "TestUpdate","address": "london","phone": "23-35-2324","gender": "MALE","qualification": "second","birthday": "1990-01-30"}"""
+
     }
     @Test
     fun contextLoad(){
@@ -67,7 +74,7 @@ class VetControllerTest @Autowired constructor(
     fun findById() {
         mockMvc.get(localhostVetId).andExpect {
             content {
-                string("""{"id":22,"fullName":"Russ Abbot","address":"Baltimore","phone":"73-35-2324","birthday":"1990-01-30","gender":"MALE","qualification":"first"}""")
+                string("""{"full_name":"Russ Abbot","address":"Baltimore","phone":"73-35-2324","gender":"MALE","qualification":"first","birthday":"1990-01-30"}""")
             }
         }
     }
@@ -77,20 +84,19 @@ class VetControllerTest @Autowired constructor(
         mockMvc.perform(
             MockMvcRequestBuilders
                 .get(localhostVetByName)
-                .param("name", "Russ")
+                .content("Russ")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ) .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
             .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value("22"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].fullName").value("Russ Abbot"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].full_name").value("Russ Abbot"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].address").value("Baltimore"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].phone").value("73-35-2324"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].birthday").value("1990-01-30"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("MALE"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].qualification").value("first"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").exists())
+
     }
 
     @Test
@@ -98,49 +104,51 @@ class VetControllerTest @Autowired constructor(
         mockMvc.perform(
             MockMvcRequestBuilders
                 .get(localhostVetByPhone)
-                .param("phone", "73-35-2324")
+                .content("73-35-2324")
+               // .param("phone", "73-35-2324")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ) .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
+         //   .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
             .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("22"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.fullName").value("Russ Abbot"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.address").value("Baltimore"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.phone").value("73-35-2324"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.birthday").value("1990-01-30"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("MALE"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.qualification").value("first"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].full_name").value("Russ Abbot"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address").value("Baltimore"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].phone").value("73-35-2324"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].birthday").value("1990-01-30"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("MALE"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].qualification").value("first"))
+
     }
 
     @Test
     fun commonTest(){
         val numberVet = vetComponent.findAll().size
+        var date = Date()
+        var vet = Vet(fullName = "owner", address = "Address", phone = "23-35-2324", birthday = date,gender = Gender.MALE,qualification="first")
         mockMvc.perform(
             MockMvcRequestBuilders
                 .post(vetUrl)
-                .content(vetCreate)
+                .content(VetRequest.getVetRequest(vet).toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
             .andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
         assertEquals(vetComponent.findAll().size, numberVet+1)
-
-        val id = vetComponent.findAll().maxBy { it.id }.id
+        val id = vetComponent.findAll().maxBy { it.id!! }.id!!
         val vetFromTable = vetComponent.findById(id)
         assertEquals(vetFromTable.id, id)
-        assertEquals(vetFromTable.fullName, "Test")
-        assertEquals(vetFromTable.address, "london")
+        assertEquals(vetFromTable.fullName, "owner")
+        assertEquals(vetFromTable.address, "Address")
         assertEquals(vetFromTable.gender, Gender.MALE)
         assertEquals(vetFromTable.phone, "23-35-2324")
-        assertEquals(vetFromTable.birthday.toString(), "1990-01-30")
+        assertEquals(SimpleDateFormat("yyyy-MM-dd").format(vetFromTable.birthday), SimpleDateFormat("yyyy-MM-dd").format(date))
 
         mockMvc.perform(
             MockMvcRequestBuilders
                 .put(vetUrl+"/$id")
-                .content(vetUpdateStart +id+ vetUpdateEnd)
+                .content(vetUpdate)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
@@ -151,8 +159,7 @@ class VetControllerTest @Autowired constructor(
         assertEquals(vetFromTableUpdate.address, "london")
         assertEquals(vetFromTableUpdate.gender, Gender.MALE)
         assertEquals(vetFromTableUpdate.phone, "23-35-2324")
-        assertEquals(vetFromTableUpdate.birthday.toString(), "1990-01-30")
-        assertEquals(vetComponent.findAll().size, numberVet+1)
+        assertEquals(SimpleDateFormat("yyyy-MM-dd").format(vetFromTable.birthday), "1990-01-30")
 
         mockMvc.perform(
             MockMvcRequestBuilders

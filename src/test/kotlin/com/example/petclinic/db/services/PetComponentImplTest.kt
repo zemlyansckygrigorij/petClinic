@@ -1,12 +1,14 @@
 package com.example.petclinic.db.services
 
 import com.example.petclinic.db.entity.Gender
+import com.example.petclinic.db.entity.Owner
 import com.example.petclinic.db.entity.Pet
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @SpringBootTest
 @Transactional
@@ -50,6 +52,21 @@ class PetComponentImplTest @Autowired constructor(val petComponent: PetComponent
 
     @Test
     fun deleteById() {
+        val pets = petComponent.findAll()
+        assertEquals(pets.size,21)
+        val id = pets.maxBy { it.id }.id+1
+        val pet = Pet(id,"CAT","Smokey",1,1,Gender.FEMALE)
+        val petSave = petComponent.save(pet)
+        val petFromTable = petComponent.findById(petSave.id)
+        assertEquals(petFromTable.id,petSave.id)
+        assertEquals(petFromTable.name,petSave.name)
+        assertEquals(petFromTable.age,petSave.age)
+        assertEquals(petFromTable.gender,petSave.gender)
+        assertEquals(petFromTable.kind,petSave.kind)
+        assertEquals(petFromTable.idOwner,petSave.idOwner)
+        assertEquals(petComponent.findAll().size,22)
+        petComponent.deleteById(petFromTable.id)
+        assertEquals(petComponent.findAll().size,21)
     }
 
     @Test
