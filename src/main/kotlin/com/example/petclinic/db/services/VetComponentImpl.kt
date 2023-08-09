@@ -128,10 +128,9 @@ class VetComponentImpl @Autowired constructor(
         noRollbackFor = (arrayOf(SQLException::class)),
         transactionManager ="transactionManager",
         value = "")
-    override fun findByPhone(phone: String): Vet {
+    override fun findByPhone(phone: String): ArrayList<Vet> {
         vetRepo.findByPhone(phone).let{
             return  it!!
         }
-        throw Exception()
     }
 }
