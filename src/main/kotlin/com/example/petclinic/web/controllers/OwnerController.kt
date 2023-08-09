@@ -147,8 +147,8 @@ class OwnerController(private val ownerComponent: OwnerComponent,
             style = ParameterStyle.DEFAULT,
             hidden = false)
         @RequestBody phone: String
-    ) = OwnerResponse
-        .getOwnerResponse(ownerComponent.findByPhone(phone))
+    ) = ownerComponent.findByPhone(phone).map { owner ->OwnerResponse
+        .getOwnerResponse(owner) }
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
