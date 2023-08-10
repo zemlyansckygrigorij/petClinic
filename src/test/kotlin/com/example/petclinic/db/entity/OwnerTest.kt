@@ -2,6 +2,8 @@ package com.example.petclinic.db.entity
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 /**
@@ -9,6 +11,8 @@ import java.util.*
  * @version 1.0
  * class OwnerTest
  */
+@SpringBootTest
+@Transactional
 class OwnerTest(){
     @Test
     fun makeTest(){

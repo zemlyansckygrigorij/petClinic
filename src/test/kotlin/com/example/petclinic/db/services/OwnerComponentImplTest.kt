@@ -93,9 +93,9 @@ class OwnerComponentImplTest @Autowired constructor(val  ownerComponent: OwnerCo
     @Disabled("Disabled until CustomerService is up!")
     @Test
     fun GetAllUsersByGender(){
-        ownerComponent.findAll().stream().map { o->o.gender }.collect(Collectors.toSet())
+       /*ownerComponent.findAll().stream().map { o->o.gender }.collect(Collectors.toSet())
         val map3: Map<Gender,List<Owner>> = ownerComponent.findAll().stream()
             .collect(Collectors.groupingBy(Owner::gender, Collectors.toList()))
-        assertEquals(11,21)
+        assertEquals(11,21)*/
     }
 }

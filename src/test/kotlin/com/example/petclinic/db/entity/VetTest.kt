@@ -3,6 +3,8 @@ package com.example.petclinic.db.entity
 import jakarta.persistence.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 /**
@@ -10,6 +12,8 @@ import java.util.*
  * @version 1.0
  * class VetTest
  */
+@SpringBootTest
+@Transactional
 class VetTest(){
     @Test
     fun makeTest(){

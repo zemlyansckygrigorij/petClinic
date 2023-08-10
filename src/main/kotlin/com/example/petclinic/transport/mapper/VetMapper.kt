@@ -7,7 +7,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 class VetMapper {
     val mapper = jacksonObjectMapper()
     fun getVetDto(vet: Vet): VetDto? {
-        return vet.address?.let {it
+        return vet.address?.let {
             vet.phone?.let { it1 ->
                 VetDto(
                     vet.fullName,
