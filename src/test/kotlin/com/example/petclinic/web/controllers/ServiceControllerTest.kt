@@ -19,7 +19,11 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * annotation class ErrorTransaction
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 class ServiceControllerTest @Autowired constructor(

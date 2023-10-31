@@ -11,8 +11,11 @@ import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
-
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class TransactionLogger
+ */
 @Slf4j
 @Aspect
 @Component

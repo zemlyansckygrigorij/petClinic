@@ -12,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
-
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class ProducerService
+ */
 @Service
 class ProducerService @Autowired constructor(
     val kafkaTemplate: KafkaTemplate<String, Any>

@@ -7,6 +7,11 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class ExceptionControllerAdvice
+ */
 @PropertySource("classpath:error.messages.properties")
 @ControllerAdvice
 class ExceptionControllerAdvice {

@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import java.text.SimpleDateFormat
 import java.util.*
-
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * annotation class ErrorTransaction
+ */
 @SpringBootTest
 class VetComponentImplTest @Autowired constructor(val vetComponent: VetComponent) {
 

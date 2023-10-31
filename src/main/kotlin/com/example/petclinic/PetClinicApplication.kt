@@ -6,6 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class PetClinicApplication
+ */
 @SpringBootApplication
 @OpenAPIDefinition(
     info = Info(title = "Документация для работы с контроллерами приложения petClinic",

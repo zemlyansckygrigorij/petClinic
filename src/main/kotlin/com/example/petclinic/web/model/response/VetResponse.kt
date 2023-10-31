@@ -6,6 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class VetResponse
+ */
 @Schema(description = "Специалист")
 data class VetResponse (
     @Schema(

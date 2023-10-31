@@ -2,6 +2,11 @@ package com.example.petclinic.transport.config
 
 import lombok.Getter
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * abstract class BaseProperties
+ */
 @Getter
 abstract class BaseProperties(
     bootstrapServers: String,
