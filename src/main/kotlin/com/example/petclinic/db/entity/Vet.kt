@@ -6,7 +6,7 @@ import jakarta.persistence.*
 /**
  * @author Grigoriy Zemlyanskiy
  * @version 1.0
- * class Vet
+ * class Vet for work with table vet
  */
 @Entity
 @Table(name = "vet")

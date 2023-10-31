@@ -30,6 +30,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 /*
 http://localhost:8080/swagger-ui/index.html
 */
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class OwnerController
+ */
 @RestController
 @RequestMapping("/owner")
 @Tag(

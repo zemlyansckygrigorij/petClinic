@@ -6,6 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class ServiceRequest
+ */
 @Schema(description = "Создание записи об услуге")
 data class ServiceRequest(
     @Schema(description = "Название", example = "Прививка")

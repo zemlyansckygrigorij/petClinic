@@ -6,7 +6,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * annotation class ErrorTransaction
+ */
 @SpringBootTest
 class PetComponentImplTest @Autowired constructor(val petComponent: PetComponent) {
 

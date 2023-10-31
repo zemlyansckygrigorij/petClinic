@@ -4,6 +4,11 @@ import com.example.petclinic.db.entity.Vet
 import com.example.petclinic.transport.dto.VetDto
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class ServiceMapper
+ */
 class VetMapper {
     val mapper = jacksonObjectMapper()
     fun getVetDto(vet: Vet): VetDto? {

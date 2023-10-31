@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import java.util.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class VetDto
+ */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class VetDto  (
     @JsonProperty("full_name") var fullName: String,

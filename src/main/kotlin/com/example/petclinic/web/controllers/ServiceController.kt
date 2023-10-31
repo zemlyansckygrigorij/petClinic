@@ -18,6 +18,11 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class ServiceController
+ */
 @RestController
 @RequestMapping("/service")
 @Tag(

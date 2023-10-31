@@ -8,6 +8,11 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.core.ProducerFactory
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class KafkaProducerConfig
+ */
 @Configuration
 class KafkaProducerConfig {
    private val bootstrapAddress: String = "localhost:9092"

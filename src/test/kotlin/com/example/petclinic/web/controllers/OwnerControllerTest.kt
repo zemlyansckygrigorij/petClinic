@@ -22,7 +22,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * annotation class ErrorTransaction
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 class OwnerControllerTest @Autowired constructor(

@@ -8,6 +8,11 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import java.util.*
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * data class VetRequest
+ */
 @Schema(description = "Создание записи о ветеринаре")
 data class VetRequest (
     @Schema(description = "ФИО", example = "Эйлер Леонард Мартинович")

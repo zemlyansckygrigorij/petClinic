@@ -9,7 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * annotation class ErrorTransaction
+ */
 @SpringBootTest
 class OwnerComponentImplTest @Autowired constructor(val  ownerComponent: OwnerComponent){
 

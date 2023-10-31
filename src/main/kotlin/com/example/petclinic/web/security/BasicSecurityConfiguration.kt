@@ -6,6 +6,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.web.SecurityFilterChain
 
+/**
+ * @author Grigoriy Zemlyanskiy
+ * @version 1.0
+ * class BasicSecurityConfiguration
+ */
 @Configuration
 @EnableWebSecurity
 class BasicSecurityConfiguration {

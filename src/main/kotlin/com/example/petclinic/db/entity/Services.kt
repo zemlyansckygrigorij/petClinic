@@ -6,7 +6,7 @@ import jakarta.persistence.*
 /**
  * @author Grigoriy Zemlyanskiy
  * @version 1.0
- * class Service
+ * class Service for work with table services
  */
 @Entity
 @Table(name = "services",schema = "public")
