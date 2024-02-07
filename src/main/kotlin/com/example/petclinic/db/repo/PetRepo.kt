@@ -24,7 +24,7 @@ interface PetRepo: JpaRepository<Pet, Long>{
     @Query(value
     = "select * "
             + "from pet  "
-            + "where id_owner = :id",
+            + "where owner_id = :id",
         nativeQuery = true)
     fun findByOwner(@Param("id") id: Long): ArrayList<Pet>
 

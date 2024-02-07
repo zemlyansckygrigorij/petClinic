@@ -224,15 +224,7 @@ class VetController(private val vetComponent: VetComponent,
             hidden = false)
         @RequestBody vetRequest: VetRequest)
     {
-        val vetFromTable = vetComponent.findById(id)
-        if(vetRequest.gender.equals("MALE"))vetFromTable.gender = Gender.MALE
-        if(vetRequest.gender.equals("FEMALE"))vetFromTable.gender = Gender.FEMALE
-        vetFromTable.address = vetRequest.address
-        vetFromTable.birthday = vetRequest.birthday
-        vetFromTable.phone = vetRequest.phone
-        vetFromTable.fullName = vetRequest.fullName
-        vetFromTable.qualification = vetRequest.qualification
-        vetComponent.save(vetFromTable)
+        vetComponent.save(getVet(id ,vetRequest))
     }
 
     @DeleteMapping("/{id}")
@@ -259,4 +251,17 @@ class VetController(private val vetComponent: VetComponent,
             style = ParameterStyle.DEFAULT)
         @PathVariable(name = "id") id: Long) = vetComponent.deleteById(id)
 
+    private fun getVet(id:Long ,vetRequest: VetRequest):Vet{
+        var vet = Vet(
+            id,
+            vetRequest.fullName,
+            vetRequest.address,
+            vetRequest.phone,
+            vetRequest.birthday,
+            Gender.MALE,
+            vetRequest.qualification
+        )
+        if(vetRequest.gender.equals("FEMALE"))vet.gender = Gender.FEMALE
+        return vet
+    }
 }

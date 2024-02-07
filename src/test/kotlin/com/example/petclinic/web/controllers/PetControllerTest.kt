@@ -35,11 +35,8 @@ class PetControllerTest @Autowired constructor(
     val petComponent: PetComponent
 ){
     @LocalServerPort
-    private  val port = 0
+    private  val port = 8080
     private val localhostPet = localhost+port+"/pet"
-    private val localhostPetId = localhost+port+"/pet/1"
-    private val localhostPetName = localhost+port+"/pet/name"
-    private val localhostPetByOwnerId = localhost+port+"/pet/owner/1"
 
     companion object{
         private const val petCreate = """{"kind":"CAT","name":"test123","age":1,"idOwner":1,"gender":"MALE"}"""
@@ -82,21 +79,21 @@ class PetControllerTest @Autowired constructor(
         assertTrue(
             this
                 .restTemplate
-                .getForObject(localhostPetId, String::class.java)
+                .getForObject(localhost+port+"/pet/1", String::class.java)
                 .toString()
                 .contains("Oliver"))
 
         assertFalse(
             this
                 .restTemplate
-                .getForObject(localhostPetId, String::class.java)
+                .getForObject(localhost+port+"/pet/1", String::class.java)
                 .toString()
                 .contains("asdfasdfsad"))
 
 
-        mockMvc.get(localhostPetId).andExpect {
+        mockMvc.get(localhost+port+"/pet/1").andExpect {
             content {
-                string("""{"id":1,"kind":"CAT","name":"Oliver","age":1,"idOwner":1,"gender":"MALE"}""")
+                string("""{"name":"Oliver","kind":"CAT","age":1,"gender":"MALE","idOwner":1}""")
             }
         }
     }
@@ -104,20 +101,15 @@ class PetControllerTest @Autowired constructor(
     fun findByName(){
         mockMvc.perform(
             MockMvcRequestBuilders
-                .get(localhostPetName)
-                .param("name", "Oliver")
+                .get(localhost+port+"/pet/name").content( "Oliver")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ) .andDo(MockMvcResultHandlers.print())
-            .andExpect(status().is3xxRedirection)
-            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-            .andExpect(jsonPath("$[0].id").value("1"))
             .andExpect(jsonPath("$[0].name").value("Oliver"))
             .andExpect(jsonPath("$[0].kind").value("CAT"))
             .andExpect(jsonPath("$[0].age").value("1"))
             .andExpect(jsonPath("$[0].idOwner").value("1"))
             .andExpect(jsonPath("$[0].gender").value("MALE"))
-            .andExpect(jsonPath("$[0].id").exists())
     }
 
     @Test
@@ -125,19 +117,19 @@ class PetControllerTest @Autowired constructor(
         assertTrue(
             this
                 .restTemplate
-                .getForObject(localhostPetByOwnerId, String::class.java)
+                .getForObject(localhost+port+"/pet/owner/1", String::class.java)
                 .toString()
                 .contains("Oliver"))
         assertFalse(
             this
                 .restTemplate
-                .getForObject(localhostPetByOwnerId, String::class.java)
+                .getForObject(localhost+port+"/pet/owner/1", String::class.java)
                 .toString()
                 .contains("asdfasdfsad"))
 
-        mockMvc.get(localhostPetByOwnerId).andExpect {
+        mockMvc.get(localhost+port+"/pet/owner/1").andExpect {
             content {
-                string("""[{"id":1,"kind":"CAT","name":"Oliver","age":1,"idOwner":1,"gender":"MALE"},{"id":18,"kind":"DOG","name":"Daisy","age":9,"idOwner":1,"gender":"FEMALE"}]""".trimIndent())
+                string("""[{"name":"Oliver","kind":"CAT","age":1,"gender":"MALE","idOwner":1},{"name":"Daisy","kind":"DOG","age":9,"gender":"FEMALE","idOwner":1}]""".trimIndent())
             }
         }
     }

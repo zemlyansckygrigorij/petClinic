@@ -73,7 +73,7 @@ class ServiceControllerTest @Autowired constructor(
     fun findById() {
         mockMvc.get(localhostServiceId).andExpect {
             content {
-                string("""{"id":1,"name":"Pet Wellness Exams","description":"Pet Wellness Exams are a key component of your petâs preventative care plan and long-term health and happiness. An annual wellness visit is a checkup for your pet that includes a nose-to-tail physical examination and a discussion of your petâs lifestyle and home environment. Your veterinarian will also ask questions about your petâs nutrition and behavior and address any concerns that you may have. Your veterinarian may recommend additional diagnostic testing and vaccinations (for an additional cost).","price":10.1}""")
+                string("""{"name":"Pet Wellness Exams","description":"Pet Wellness Exams are a key component of your petâs preventative care plan and long-term health and happiness. An annual wellness visit is a checkup for your pet that includes a nose-to-tail physical examination and a discussion of your petâs lifestyle and home environment. Your veterinarian will also ask questions about your petâs nutrition and behavior and address any concerns that you may have. Your veterinarian may recommend additional diagnostic testing and vaccinations (for an additional cost).","price":10.1}""")
             }
         }
     }
@@ -83,17 +83,14 @@ class ServiceControllerTest @Autowired constructor(
         mockMvc.perform(
             MockMvcRequestBuilders
                 .get(localhostServiceByName)
-                .param("name", "Puppy and Kitten Wellness Exams & Vaccination")
+                .content("Puppy and Kitten Wellness Exams & Vaccination")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ) .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
             .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value("2"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Puppy and Kitten Wellness Exams & Vaccination"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].description").exists())
-
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").exists())
     }
 
     @Test

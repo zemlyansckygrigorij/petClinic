@@ -82,7 +82,7 @@ class OwnerComponentImplTest @Autowired constructor(val  ownerComponent: OwnerCo
 
     @Test
     fun findByPhone() {
-        val ownerFromTable = ownerComponent.findByPhone("23-35-2324")
+        val ownerFromTable = ownerComponent.findByPhone("23-35-2324")[0]
         assertEquals(ownerFromTable.gender, Gender.MALE )
         assertEquals(ownerFromTable.fullName,"Bradley Alexander Abbe")
         assertEquals(ownerFromTable.address,"Baltimore")

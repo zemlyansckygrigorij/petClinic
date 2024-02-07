@@ -101,7 +101,7 @@ insert into pet_services(id_pet, id_services) values(1,1),
                                                     (21,11);
 
 
-insert into vet_services(id_vet, id_services) values(1,1),
+insert into vet_services(vet_id, services_id) values(1,1),
                                                     (2,1),
                                                     (3,2),
                                                     (4,2),

@@ -35,7 +35,23 @@ class VetComponentImplTest @Autowired constructor(val vetComponent: VetComponent
         val pattern = "yyyy-MM-dd"
         val simpleDateFormat = SimpleDateFormat(pattern)
         assertEquals(vetFrom.birthday.toString(),simpleDateFormat.format(date).toString())
+
+        vetFrom.gender=Gender.FEMALE
+        vetFrom.fullName="ownerUpdate"
+        vetFrom.address="AddressUpdate"
+        vetFrom.phone="phoneUpdate"
+        vetFrom.qualification="second"
+        vetComponent.save(vetFrom)
+        val vetFromUpdate = vetComponent.findById(vetSave.id)
+        assertEquals(vetFromUpdate.gender, Gender.FEMALE )
+        assertEquals(vetFromUpdate.fullName,"ownerUpdate")
+        assertEquals(vetFromUpdate.address,"AddressUpdate")
+        assertEquals(vetFromUpdate.phone,"phoneUpdate")
+        assertEquals(vetFromUpdate.qualification,"second")
+
+
         vetComponent.deleteById(vetFrom.id)
+
         assertEquals(vetComponent.findAll().size, 17)
     }
 
@@ -44,9 +60,9 @@ class VetComponentImplTest @Autowired constructor(val vetComponent: VetComponent
         val vet = vetComponent.findById(1)
         assertEquals(vet.id, 1)
         assertEquals(vet.gender, Gender.MALE )
-        assertEquals(vet.fullName,"Bradley Alexander Abbe")
+        assertEquals(vet.fullName,"Russ Abbot")
         assertEquals(vet.address,"Baltimore")
-        assertEquals(vet.phone,"23-35-2324")
+        assertEquals(vet.phone,"73-35-2324")
         assertEquals(vet.birthday.toString() ,"1990-01-30")
     }
 

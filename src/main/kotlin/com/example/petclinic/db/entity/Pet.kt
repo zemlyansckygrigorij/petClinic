@@ -23,7 +23,7 @@ class Pet(
     @Column(name = "age", nullable = true)
     var age: Int? = null,
 
-    @Column(name = "id_owner", nullable = true)
+    @Column(name = "owner_id", nullable = true)
     var idOwner: Int? = null,
 
     @Column(name = "gender", nullable = true)

@@ -1,5 +1,6 @@
 package com.example.petclinic.web.model.request
 
+import com.example.petclinic.db.entity.Gender
 import com.example.petclinic.db.entity.Vet
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -65,6 +66,19 @@ data class VetRequest (
                     }
                 }
             }
+        }
+        fun getVet(id:Long ,vetRequest: VetRequest):Vet{
+            var vet = Vet(
+                id,
+                vetRequest.fullName,
+                vetRequest.address,
+                vetRequest.phone,
+                vetRequest.birthday,
+                Gender.MALE,
+                vetRequest.qualification
+            )
+            if(vetRequest.gender.equals("FEMALE"))vet.gender = Gender.FEMALE
+            return vet
         }
     }
 }

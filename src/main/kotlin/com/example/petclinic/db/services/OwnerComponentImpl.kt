@@ -39,6 +39,9 @@ class OwnerComponentImpl @Autowired constructor(
         value = ""
     )
     override fun save(owner: Owner): Owner {
+        println( " owner.address-"+owner.address)
+        println( " owner.fullName-"+owner.fullName)
+        println( " owner.id-"+owner.id)
         return ownerRepo.save(owner)
     }
 
@@ -139,7 +142,7 @@ class OwnerComponentImpl @Autowired constructor(
         noRollbackFor = (arrayOf(SQLException::class)),
         transactionManager ="transactionManager",
         value = "")
-    override fun findByPhone(phone: String): Owner {
+    override fun findByPhone(phone: String): ArrayList<Owner> {
         ownerRepo.findByPhone(phone).let{
            return  it!!
         }

@@ -47,8 +47,10 @@ class OwnerControllerTest @Autowired constructor(
     private val ownerUrl = "http://localhost:8080/owner"
     companion object{
         private val ownerCreate = """{"fullName":"Test","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
-        private val ownerUpdateEnd =""" ,"fullName":"TestUpdate","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
+        private val ownerUpdateEnd =""" ,"full_name":"TestUpdate","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
         private val ownerUpdateStart =""" {"id": """
+        private val vetUpdateEnd   =""" ,"full_name":"TestUpdate","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
+        private val vetUpdateStart =""" {"id": """
     }
 
     @Test
@@ -79,7 +81,7 @@ class OwnerControllerTest @Autowired constructor(
     fun findById() {
         mockMvc.get(localhostOwnerId).andExpect {
             content {
-                string("""{"id":1,"fullName":"Bradley Alexander Abbe","address":"Baltimore","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}""")
+                string("""{"full_name":"Bradley Alexander Abbe","address":"Baltimore","phone":"23-35-2324","gender":"MALE","birthday":"1990-01-30"}""")
             }
         }
     }
@@ -89,19 +91,21 @@ class OwnerControllerTest @Autowired constructor(
         mockMvc.perform(
             MockMvcRequestBuilders
                 .get(localhostOwnerByName)
-                .param("name", "Bradley")
+                .content("Bradley")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ) .andDo(MockMvcResultHandlers.print())
+            .andExpect(content().string("""[{"full_name":"Bradley Alexander Abbe","address":"Baltimore","phone":"23-35-2324","gender":"MALE","birthday":"1990-01-30"}]""")
+            )
+
             .andExpect(status().is3xxRedirection)
             .andExpect(content().contentType("application/json"))
-            .andExpect(jsonPath("$[0].id").value("1"))
-            .andExpect(jsonPath("$[0].fullName").value("Bradley Alexander Abbe"))
+
+            .andExpect(jsonPath("$[0].full_name").value("Bradley Alexander Abbe"))
             .andExpect(jsonPath("$[0].address").value("Baltimore"))
             .andExpect(jsonPath("$[0].phone").value("23-35-2324"))
             .andExpect(jsonPath("$[0].birthday").value("1990-01-30"))
             .andExpect(jsonPath("$[0].gender").value("MALE"))
-            .andExpect(jsonPath("$[0].id").exists())
     }
 
     @Test
@@ -109,19 +113,21 @@ class OwnerControllerTest @Autowired constructor(
         mockMvc.perform(
             MockMvcRequestBuilders
                 .get(localhostOwnerByPhone)
-                .param("phone", "23-35-2324")
+               // .param("phone", "23-35-2324")
+                .content("23-35-2324")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ) .andDo(MockMvcResultHandlers.print())
-            .andExpect(status().is3xxRedirection)
+         .andExpect(status().is3xxRedirection)
             .andExpect(content().contentType("application/json"))
-            .andExpect(jsonPath("$.id").value("1"))
-            .andExpect(jsonPath("$.fullName").value("Bradley Alexander Abbe"))
-            .andExpect(jsonPath("$.address").value("Baltimore"))
-            .andExpect(jsonPath("$.phone").value("23-35-2324"))
-            .andExpect(jsonPath("$.birthday").value("1990-01-30"))
-            .andExpect(jsonPath("$.gender").value("MALE"))
-            .andExpect(jsonPath("$.id").exists())
+            .andExpect(content().string("""[{"full_name":"Bradley Alexander Abbe","address":"Baltimore","phone":"23-35-2324","gender":"MALE","birthday":"1990-01-30"}]""")
+            )
+
+            .andExpect(jsonPath("$[0].full_name").value("Bradley Alexander Abbe"))
+            .andExpect(jsonPath("$[0].address").value("Baltimore"))
+            .andExpect(jsonPath("$[0].phone").value("23-35-2324"))
+            .andExpect(jsonPath("$[0].birthday").value("1990-01-30"))
+            .andExpect(jsonPath("$[0].gender").value("MALE"))
     }
 
     @Test
@@ -156,7 +162,13 @@ class OwnerControllerTest @Autowired constructor(
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
-
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .put("http://localhost:8080/vet/40")
+                .content(vetUpdateStart +"40"+vetUpdateEnd)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
         val ownerFromTableUpdate = ownerComponent.findById(id)
         assertEquals(ownerFromTableUpdate.id, id)
         assertEquals(ownerFromTableUpdate.fullName, "TestUpdate")

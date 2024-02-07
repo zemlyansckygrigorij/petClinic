@@ -152,8 +152,10 @@ class OwnerController(private val ownerComponent: OwnerComponent,
             style = ParameterStyle.DEFAULT,
             hidden = false)
         @RequestBody phone: String
-    ) = OwnerResponse
-        .getOwnerResponse(ownerComponent.findByPhone(phone))
+    ) = ownerComponent
+        .findByPhone(phone)
+        .map { owner ->OwnerResponse
+            .getOwnerResponse(owner) }
 
     @GetMapping("/{id}/send")
     @ResponseStatus(HttpStatus.FOUND)
@@ -257,11 +259,12 @@ class OwnerController(private val ownerComponent: OwnerComponent,
             hidden = false)
         @RequestBody ownerRequest: OwnerRequest
     ) {
+
         val ownerFromTable = ownerComponent.findById(id)
         if(ownerRequest.gender.equals("MALE"))ownerFromTable.gender = Gender.MALE
         if(ownerRequest.gender.equals("FEMALE"))ownerFromTable.gender = Gender.FEMALE
         ownerFromTable.address = ownerRequest.address
-        ownerFromTable.birthday =ownerRequest.birthday
+        ownerFromTable.birthday = ownerRequest.birthday
         ownerFromTable.phone = ownerRequest.phone
         ownerFromTable.fullName = ownerRequest.fullName
         ownerComponent.save(ownerFromTable)
