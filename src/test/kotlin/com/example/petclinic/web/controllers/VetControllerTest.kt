@@ -43,7 +43,7 @@ class VetControllerTest @Autowired constructor(
     private val localhostVetByPhone = localhost +port+"/vet/phone"
     private val vetUrl = "http://localhost:8080/vet"
     companion object{
-        private val vetCreate = """{"fullName":"Test","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE"}"""
+        private val vetCreate = """{"fullName":"Test","address":"london","phone":"23-35-2324","birthday":"1990-01-30","gender":"MALE","qualification":"first"}"""
         private val vetUpdate =  """ {"full_name":"Testupodate","address":"Testypdate","phone":"73-35-2324","birthday":"1990-01-30","gender":"MALE","qualification":"first"}"""
     }
 

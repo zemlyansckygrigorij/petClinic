@@ -113,8 +113,7 @@ class OwnerControllerTest @Autowired constructor(
         mockMvc.perform(
             MockMvcRequestBuilders
                 .get(localhostOwnerByPhone)
-               // .param("phone", "23-35-2324")
-                .content("23-35-2324")
+                    .content("23-35-2324")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ) .andDo(MockMvcResultHandlers.print())
