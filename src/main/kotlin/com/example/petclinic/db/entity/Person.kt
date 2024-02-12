@@ -20,7 +20,7 @@ abstract class Person(
     @Column(name = "address", nullable = false)
     open var address: String,
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = false, unique = true)
     open var phone: String ,
 
     @Column(name = "birthday", nullable = true)
